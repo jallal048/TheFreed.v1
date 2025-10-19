@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useEffect, useMemo, useCallback } from 'react';
 import { useAuth, AgeVerificationReason } from './AuthContext';
 import { AuthUser, UserRole, Creator, Post, Media, Notification, Conversation, Message, Comment, PostType, NotificationType, PostFormat, FanList, CreatorStats, ScheduledMessage, FreeTrialLink, SubscriptionPackage, UserSubscription, Story, StoryItem, RankConfig, SearchResults, Category, SearchResultHashtag, SearchResultPost, VerificationSubmission, Transaction, TransactionType, PlatformSettings, RankName, Report, Announcement, AutoModQueueItem, SupportTicket, SupportTicketStatus, OnboardingDataPayload, Achievement, PostInteractionMetrics } from '../types';
@@ -1153,7 +1152,12 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return { ...p, children: p.children.map(c => c.id === categoryId ? { ...c, name: newName, slug } : c) };
         }));
     }, []);
-    const deleteCategory = useCallback((categoryId: number) => setCategories(prev => prev.filter(c => c.id !== categoryId).map(p => ({ ...p, children: p.children.filter(c => c.id !== categoryId) })));, []);
+    const deleteCategory = useCallback((categoryId: number) => {
+        setCategories(prev => prev
+            .filter(c => c.id !== categoryId)
+            .map(p => ({ ...p, children: p.children.filter(c => c.id !== categoryId) }))
+        );
+    }, []);
     const adminDeleteUser = useCallback(async (userId: number) => { await simulateNetwork(); setUsers(prev => prev.filter(u => u.id !== userId)); }, [setUsers]);
     const suspendUser = useCallback(async (userId: number, durationDays: number | 'permanent') => {
         const expiry = new Date();
