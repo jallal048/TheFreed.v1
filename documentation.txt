@@ -1,0 +1,160 @@
+======================================
+THEFREED - FULL APPLICATION DOCUMENTATION
+======================================
+
+1. OVERVIEW
+-----------
+"TheFreed" is a comprehensive, frontend-only simulation of a content monetization platform, similar in concept to Patreon or OnlyFans. It allows "Creators" to publish exclusive content and "Fans" to access it through a subscription system. The entire application, including user data, content, and administrative functions, is simulated within the browser using React's state management (Context API) without a real backend.
+
+
+2. CORE CONCEPTS
+----------------
+*   **Creator Economy:** The platform is built around creators who produce content and fans who support them financially.
+*   **Monetization Models:**
+    *   **Subscriptions:** Fans pay a recurring monthly fee to access a creator's exclusive content. Creators can offer discounted packages for longer subscription periods.
+    *   **Pay-Per-View (PPV):** Creators can lock specific posts or direct messages, which fans can unlock for a one-time fee.
+    *   **Tipping:** Fans can send one-time tips to creators as a token of appreciation, either on their profile or directly in messages.
+
+
+3. USER ROLES & DATA MODELS (`types.ts`)
+---------------------------------------
+The application has three primary user roles: Fan, Creator, and Admin.
+
+*   **AuthUser (Fan/Creator/Admin):** The core user object.
+    *   Contains credentials, profile info (`username`, `avatarUrl`), subscriptions, unlocked content, settings (`isProfilePrivate`, `showSensitiveContent`), and status (`isAgeVerified`, `suspendedUntil`).
+    *   If the user is a `CREATOR`, they have a `creatorId` linking to their public Creator profile.
+
+*   **Creator:** The public-facing profile for a creator.
+    *   Contains display information (`displayName`, `bannerUrl`, `bio`), monetization settings (`monthlyPrice`, `subscriptionPackages`), social links, and content categories.
+    *   Includes a `creatorScore` and `rank` ('PLATINUM', 'DIAMOND', etc.), which affects platform commission rates.
+
+*   **Post:** The main content unit.
+    *   Has a `PostType` (`Public`, `SubscriberOnly`, `PayPerView`).
+    *   Can contain text and/or a gallery of `Media` (images/videos).
+    *   Holds engagement data like `likedBy` and `comments`.
+
+*   **Transaction:** A record of any financial activity.
+    *   Created for every subscription, tip, or PPV purchase.
+    *   Stores the total `amount`, `platformFee` (calculated based on creator rank), and `creatorPayout`.
+
+*   **VerificationSubmission:** A request for age verification.
+    *   Generated when a fan wants to view NSFW content or a new user registers as a creator.
+    *   Contains the user's ID, the captured ID image, and, for new creators, their complete `onboardingData`. This is sent to an admin queue for manual review.
+
+*   **Report, Announcement, SupportTicket:** Data models for admin-managed features like content moderation, global banners, and the helpdesk system.
+
+
+4. FRONTEND ARCHITECTURE
+------------------------
+The application is built using React and TypeScript, with a state management system based entirely on the Context API.
+
+*   **`AuthProvider.tsx`:** Manages the `currentUser` state, handling login, logout, registration, and user impersonation. It is the top-level provider.
+*   **`DataProvider.tsx`:** The "simulated database". It holds all major data arrays (users, posts, creators, transactions, etc.) in its state and provides functions to manipulate this data. All other components and contexts rely on it for data fetching and updates.
+*   **`NavigationProvider.tsx`:** Manages the application's view state (`view`), simulating a router. It provides functions like `onGoToHome`, `onSelectCreator`, etc., that components call to change the rendered page.
+*   **`ModalProvider.tsx`:** Manages the state for all modals in the application (Subscription, PPV, Confirmation, etc.), ensuring only one can be open at a time and providing a clean API to open/close them.
+*   **`LocaleProvider.tsx`:** Handles internationalization (i18n). It loads translation files (`en.json`, `es.json`) and provides a `t` function for translating text keys throughout the app. It includes a loading state to prevent UI rendering before translations are ready, fixing a session-ending bug.
+
+
+5. KEY FEATURES (USER-FACING)
+------------------------------
+*   **Authentication & Onboarding:**
+    *   Login/Signup modal.
+    *   A multi-step, guided onboarding process for new creators, collecting profile info, categories, and personal data for verification.
+*   **Content Feeds:**
+    *   **Home (`HomePage.tsx`):** A chronological feed of posts from creators the user is subscribed to.
+    *   **Discover (`DiscoverPage.tsx`):** A grid of public posts from all creators, scored by an algorithm (`feedAlgorithm.ts`) to promote engagement and freshness. For logged-in users, the feed is personalized based on their subscription history.
+    *   **Explore (`ExplorePage.tsx`):** A vertical, scrollable feed (similar to TikTok/Reels) that shows posts related to a selected post from the Discover grid.
+*   **Messaging System (`MessagesPage.tsx`):** A real-time chat interface with support for text, media, tips, and PPV content.
+*   **Settings (`SettingsPage.tsx`):** A multi-section page where users can edit their profile, account details, privacy settings, payment methods, and submit support tickets.
+*   **Support System (`SupportPage.tsx`):** A helpdesk form for both guests and logged-in users to create support tickets, which are then managed by admins.
+*   **Suspension Screen (`SuspensionPage.tsx`):** Users who are suspended or banned are shown a dedicated screen with information about their restriction and links to support, blocking them from accessing the rest of the app.
+
+
+6. ADMIN PANEL (`/admin`)
+-------------------------
+The admin panel is a powerful, self-contained part of the application for managing the entire platform.
+
+*   **Dashboard (`AdminDashboardPage.tsx`):** The landing page for admins.
+    *   Displays key performance indicators (KPIs) like Total Users, Revenue, and pending moderation items.
+    *   Features line charts visualizing user and revenue growth over time.
+*   **User Management (`AdminUsersPage.tsx`, `AdminUserDetailPage.tsx`):**
+    *   A searchable and filterable table of all users.
+    *   Admins can view a detailed user profile with their financial history, subscriptions, and activity log.
+    *   **Actions:** Suspend (with duration), Ban, Reactivate, Send Password Reset (simulated), and **Impersonate** (log in as the user to debug issues).
+*   **Content & Moderation:**
+    *   **Content (`AdminContentPage.tsx`):** View and filter all posts on the platform. Admins can navigate to a detailed view (`AdminPostDetailPage.tsx`) to inspect a post and its comments, with options to delete either.
+    *   **Reports (`AdminReportsPage.tsx`):** A queue of user-submitted reports. Admins can review the reported content and take action (dismiss, delete post, suspend user).
+    *   **Auto-Moderation (`AdminAutoModPage.tsx`):** A simulated AI-powered queue that flags potentially problematic content for human review. Admins can approve or delete the content.
+*   **Verifications (`AdminVerificationsPage.tsx`):**
+    *   A queue of all pending age verification submissions.
+    *   Admins can view the submitted ID image in a lightbox (zoomable view) and approve or reject the request. Approval triggers the final account creation or permission update.
+*   **Finances (`AdminFinancesPage.tsx`):**
+    *   A dashboard with total revenue, platform fees, and creator payouts.
+    *   A searchable, filterable, and paginated table of every transaction on the platform.
+    *   A list of creator balances with a button to simulate processing payouts.
+*   **Platform Settings (`AdminSettingsPage.tsx`):**
+    *   **Commission Rates:** Admins can dynamically change the platform's commission percentage for each creator rank.
+    *   **Featured Creators:** Manage the list of creators who are highlighted in discovery sections.
+    *   **Category Management:** A full CRUD interface to add, edit, and delete content categories and sub-categories.
+*   **Support Tickets (`AdminSupportTicketsPage.tsx`):**
+    *   A helpdesk interface to view and manage all user-submitted support tickets. Admins can filter tickets and update their status (Open, In Progress, Closed).
+*   **Announcements (`AdminAnnouncementsPage.tsx`):**
+    *   A system to create and manage global announcements. Admins can target all users, just creators, or just fans. Active announcements appear as a banner at the top of the main application.
+
+
+7. GAMIFICATION & SOCIAL REWARDS
+--------------------------------
+To increase user engagement and retention, the platform includes a gamification layer with badges and achievements.
+
+*   **Top Fan Badge:**
+    *   The system calculates a "support score" for each fan of a creator based on a combination of their total tip amount and their subscription duration.
+    *   The fan with the highest score is designated the "Top Fan" and receives a special diamond badge (💎) next to their name in that creator's comment sections, creating a sense of status and encouraging support.
+
+*   **Achievements System:**
+    *   Both fans and creators can unlock a variety of achievements based on their activity.
+    *   **Fan Achievements:** "First Tip", "Explorer" (visiting 100 profiles), "Patron" (subscribing to 10 creators), and loyalty badges for subscription streaks (e.g., 3 months).
+    *   **Creator Achievements:** "First 1,000 Likes", "Platinum Rank Reached", and "Viral Post" (receiving 100 likes in 24 hours).
+    *   Unlocked achievements are displayed in a dedicated gallery section on the user's public profile page (`ProfilePage.tsx` and `FanProfilePage.tsx`), adding another layer of personalization and social proof.
+    *   The `DataProvider` centrally manages the logic for checking and granting these achievements automatically when users perform relevant actions.
+
+
+8. ADVANCED FEATURES & SIMULATIONS
+------------------------------------
+*   **AI Content Generation (`AiContentGenerator.tsx`):**
+    *   Utilizes the Gemini API (`geminiService.ts`) to generate creative content ideas for creators based on a topic.
+    *   Features loading/error states and displays ideas in a structured format, using a `responseSchema` for reliable JSON output.
+
+*   **Personalized Discovery Feed (`feedAlgorithm.ts`):**
+    *   **Guest Algorithm:** Scores posts based on a weighted combination of popularity (likes/comments), recency (exponential decay), and creator quality (subscriber count).
+    *   **Personalized Algorithm (Logged-in Users):** Augments the base score with:
+        *   **Interest Score:** Boosts content from categories related to the user's active subscriptions.
+        *   **Implicit Interaction Score:** Tracks in-session user behavior—such as **dwell time** on posts, **video completion rates**, expanding post text, and clicking on creator profiles—to refine recommendations in real-time.
+        *   **Exploration Boost:** A small, randomized chance to boost content outside the user's primary interests to prevent "filter bubbles" and encourage discovery.
+
+*   **"Rabbit Hole" Exploration (`ExplorePage.tsx`):**
+    *   When a user enters the "explore" feed from a post, the system generates a dynamic feed that goes beyond simple similarity.
+    *   It uses a `categoryRelationsGraph` (defined in `constants.ts`) to pull in content from related but different categories (e.g., viewing a "Cooking" post might lead to "Fitness" or "Travel" content).
+    *   This creates a more engaging and surprising discovery experience where each scroll can be a relevant surprise.
+
+*   **AI-Powered Image Watermarking (`geminiService.ts`):**
+    *   A simulation of a server-side process, this feature uses the HTML Canvas API on the client to dynamically apply a `TheFreed/@username` watermark to images uploaded by creators. This enhances the realism of the platform simulation.
+
+
+9. UI/UX & DESIGN
+-----------------
+*   **Responsive Design:** The app is fully responsive, featuring a `Sidebar` for desktop layouts and a `BottomNav` for a mobile-first experience.
+*   **Dark Mode:** A toggleable light/dark theme is managed centrally in `AuthProvider` and applied globally using Tailwind CSS's dark mode variant.
+*   **Component Library (`components/`):**
+    *   Employs a suite of reusable components like `Icon`, `DropdownMenu`, `ToggleSwitch`, and `CreatorCard` for a consistent look and feel.
+    *   Features specialized components like `AvatarWithStory`, which dynamically renders a colored ring around a creator's avatar if they have active, unseen stories, encouraging engagement.
+*   **Accessibility:** ARIA attributes are used in modals, buttons, and navigation elements to improve compatibility with screen readers and assistive technologies.
+
+
+10. TECHNICAL DETAILS & SERVICES
+-------------------------------
+*   **State Management:** The application exclusively uses React Context for a centralized, prop-drilling-free architecture. This demonstrates how to manage complex, interrelated state in a large application without external libraries like Redux.
+*   **Gemini API Integration (`geminiService.ts`):**
+    *   This service abstracts all communication with the `@google/genai` library.
+    *   The `generateContentIdeas` function constructs a detailed prompt and specifies a `responseSchema` to request structured JSON output from the model, ensuring data consistency and type safety.
+*   **Data Persistence:** None. The data is entirely in-memory and resets on every page refresh, as this is a frontend-only simulation. All "mock data" is initialized in `constants.ts` and loaded into `DataProvider`.
+*   **Routing:** Routing is simulated via the `NavigationProvider`, which manages a `view` state object instead of browser URLs. This keeps the application as a true single-page experience and simplifies state management.

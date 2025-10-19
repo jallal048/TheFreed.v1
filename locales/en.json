@@ -1,0 +1,384 @@
+
+{
+  "nav": {
+    "home": "Home",
+    "discover": "Discover",
+    "rankings": "Rankings",
+    "create": "Create",
+    "messages": "Messages",
+    "profile": "Profile",
+    "schedule": "Schedule"
+  },
+  "header": {
+    "searchPlaceholder": "Search creators or posts...",
+    "myPublicProfile": "My Public Profile",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "savedPosts": "Saved Posts",
+    "referrals": "Referrals",
+    "settings": "Settings",
+    "logout": "Log Out",
+    "login": "Log In",
+    "signUpFree": "Sign Up Free",
+    "notifications": "Notifications",
+    "noNotifications": "No new notifications."
+  },
+  "creatorProfile": {
+    "posts": "Posts",
+    "likes": "Likes",
+    "subscribers": "Subscribers",
+    "editProfile": "Edit Profile",
+    "sendMessage": "Send Message",
+    "subscribeFor": "Subscribe for ${{price}}/mo",
+    "subscribeFree": "Subscribe for Free",
+    "categories": "Categories",
+    "socialLinks": "Social Links"
+  },
+  "rankingsPage": {
+    "title": "Creator Rankings",
+    "description": "Discover the top creators on the platform.",
+    "points": "points",
+    "emptyTitle": "No Creators Here Yet",
+    "noCreatorsInRank": "There are currently no creators in the {{rank}} rank.",
+    "filterByCategory": "Filter by Category",
+    "allCategories": "All Categories",
+    "emptyFilterTitle": "No Creators Found",
+    "noCreatorsInFilter": "No creators match the selected filter in the {{rank}} rank."
+  },
+  "discoverPage": {
+    "title": "Discover",
+    "description": "Explore posts from all creators across the platform.",
+    "searchPlaceholder": "Search creators, posts, or #hashtags...",
+    "searchResults": {
+      "creators": "Creators",
+      "posts": "Posts",
+      "hashtags": "Hashtags",
+      "viewAll": "View all results",
+      "noResults": "No results found for"
+    },
+    "all": "All"
+  },
+  "homePage": {
+    "title": "Home",
+    "emptyFeedTitle": "Your feed is looking a little empty!",
+    "emptyFeedDescription": "Subscribe to creators to see their posts here. Start by finding new creators to support.",
+    "discoverCreators": "Discover Creators"
+  },
+  "landingPage": {
+    "heroTitle": "Your content. Your rules. Your freedom.",
+    "heroSubtitle": "The ultimate platform where creators build their empire and fans discover authentic, exclusive content. No algorithms, no middlemen.",
+    "cta": {
+      "imACreator": "I'm a Creator",
+      "imAFan": "I'm a Fan",
+      "startEarning": "Start Earning Today",
+      "startExploring": "Start Exploring",
+      "signUpForFree": "Sign Up for Free"
+    },
+    "socialProof": {
+      "title": "Trusted by the New Generation of Creators"
+    },
+    "creatorSection": {
+      "title": "Freedom for Creators",
+      "feature1": { "title": "Monetize Your Passion", "desc": "Earn money with monthly subscriptions, tips, and pay-per-view (PPV) content. You set the price, you keep most of it." },
+      "feature2": { "title": "Direct Connection", "desc": "Forget the algorithms. Talk directly to your fans through a private feed, stories, and direct messaging. Build a real community." },
+      "feature3": { "title": "Powerful Tools", "desc": "Analyze your stats, schedule your posts, and get content ideas with our integrated AI. All the tools you need to grow." },
+      "feature4": { "title": "Security and Control", "desc": "You decide who sees your content. With our age verification and robust moderation tools, you create in a safe environment." }
+    },
+    "fanSection": {
+      "title": "Freedom for Fans",
+      "feature1": { "title": "Exclusive Access", "desc": "Unlock content you won't find anywhere else. Directly support the creators you admire and be part of their journey." },
+      "feature2": { "title": "Real Interaction", "desc": "Comment, like, and send direct messages. On TheFreed, you're not just a number, you're part of a community." },
+      "feature3": { "title": "Discover Without Limits", "desc": "Explore a galaxy of artists, podcasters, musicians, and more. Our discovery feed is designed for you to find your next obsession." }
+    },
+    "howItWorks": {
+      "title": "Getting Started is Simple",
+      "step1": { "title": "Create Your Profile", "desc": "Sign up in seconds as a Creator or Fan. Personalize your profile to let the world know you." },
+      "step2": {
+        "creator": { "title": "Publish Your Content", "desc": "Upload your creations, set your prices, and decide who gets to see it. The freedom is yours!" },
+        "fan": { "title": "Subscribe & Support", "desc": "Find creators who inspire you, subscribe, and access their exclusive world instantly." }
+      },
+      "step3": { "title": "Connect & Thrive", "desc": "Interact, grow, and be part of a community built on respect and creativity." }
+    },
+    "finalCta": {
+      "title": "Ready to be Freed?",
+      "subtitle": "Join the creator revolution today. Your community is waiting."
+    },
+    "signUpFree": "Sign Up Free",
+    "signIn": "Sign In",
+    "testimonials": {
+      "quote1": "TheFreed has given me the freedom to connect with my audience without worrying about censorship or algorithm changes.",
+      "role1": "Digital Artist",
+      "quote2": "Finally, a platform that values my work. My income doubled in the first month.",
+      "role2": "Musician",
+      "quote3": "I love getting exclusive content from my favorite creators. It feels like a real community!",
+      "role3": "Fan",
+      "quote4": "The direct messaging feature has been a game-changer for connecting with my subscribers.",
+      "role4": "Chef"
+    }
+  },
+  "footer": {
+    "product": "Product",
+    "forCreators": "For Creators",
+    "forFans": "For Fans",
+    "discover": "Discover",
+    "company": "Company",
+    "about": "About Us",
+    "press": "Press",
+    "legal": "Legal",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "guidelines": "Community Guidelines",
+    "copyright": "© 2024 TheFreed. All rights reserved."
+  },
+  "post": {
+    "locked": {
+      "title": "Exclusive Content Awaits",
+      "description": "This content is exclusive for {{creatorName}}'s subscribers. Join their community to unlock this post and more!"
+    },
+    "ppv": {
+      "title": "Unlock exclusive content",
+      "unlockFor": "Unlock for ${{price}}"
+    },
+    "comments": {
+      "addCommentPlaceholder": "Add a comment...",
+      "postComment": "Post Comment",
+      "topFan": "Top Fan",
+      "deleteComment": "Delete Comment",
+      "reportComment": "Report Comment"
+    },
+    "actions": {
+      "tip": "Tip"
+    },
+    "dropdown": {
+      "edit": "Edit Post",
+      "boost": "Boost Post",
+      "delete": "Delete Post",
+      "deleteConfirmMessage": "Are you sure you want to delete this post? This action cannot be undone.",
+      "saved": "Saved",
+      "save": "Save Post",
+      "copyLink": "Copy Link",
+      "report": "Report Post",
+      "reportPrompt": "Please provide a reason for reporting this post:",
+      "reportSuccess": "Thank you for your report. Our moderation team will review it shortly.",
+      "copyLinkSuccess": "Link to post {{postId}} copied to clipboard!"
+    }
+  },
+  "createPost": {
+    "setPriceTooltip": "Set Price (PPV)",
+    "setGoalTooltip": "Set Fundraising Goal",
+    "ppvDisabledTooltip": "This creator has a monthly subscription, so individual posts cannot be priced.",
+    "setPriceLabel": "Set Price (PPV)",
+    "fundraisingGoalLabel": "Fundraising Goal"
+  },
+  "fundraising": {
+    "raised": "${{raised}} of ${{goal}} raised",
+    "contribute": "Contribute"
+  },
+  "onboarding": {
+    "welcome": "Welcome, {{username}}!",
+    "subtitle": "Let's set up your creator account.",
+    "nextStep": "Next Step",
+    "back": "Back",
+    "continueToVerification": "Continue to Verification",
+    "step1": {
+      "title": "Profile Basics",
+      "description": "This is how fans will see you. You can change this anytime.",
+      "displayNameLabel": "Public Name",
+      "bioLabel": "Bio",
+      "bioPlaceholder": "Tell your fans a little about yourself and your content.",
+      "locationLabel": "Location",
+      "locationPlaceholder": "e.g., London, UK"
+    },
+    "step2": {
+      "title": "Categorize Your Content",
+      "description": "Help fans discover you by selecting categories that fit your content.",
+      "mainCategoryPrompt": "Select 1 main category:",
+      "subCategoryPrompt": "Select up to 3 sub-categories:"
+    },
+    "step3": {
+      "title": "Add Your Social Links",
+      "description": "Let your fans connect with you on other platforms.",
+      "addLink": "+ Add Link"
+    },
+    "step4": {
+      "title": "Set Your Price",
+      "description": "Choose a monthly price for your subscriptions. You can offer discounts later.",
+      "priceLabel": "Subscription Price ($/month)"
+    },
+    "step5": {
+      "title": "Your Personal Information",
+      "description": "This data is required for age verification and payouts. It will not be shown on your public profile.",
+      "fullNameLabel": "Full Legal Name",
+      "dobLabel": "Date of Birth",
+      "addressLabel": "Residential Address"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "nav": {
+        "profile": "Edit Profile",
+        "monetization": "Monetization",
+        "payout": "Payout Settings",
+        "account": "Account",
+        "personal": "Personal Data",
+        "billing": "Billing Info",
+        "wallet": "My Wallet",
+        "notifications": "Notifications",
+        "privacy": "Privacy & Security",
+        "support": "Support Center"
+    },
+    "privacy": {
+      "sensitiveContentTitle": "Display sensitive content (NSFW)",
+      "sensitiveContentDesc": "See media that may be sensitive. You must be 18+ to enable this."
+    },
+    "referrals": {
+      "title": "Referrals",
+      "description": "Invite creators to TheFreed and earn 5% of their earnings for their first year on the platform. Share your unique link below!",
+      "yourLink": "Your Referral Link",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "creatorsReferred": "Creators Referred",
+      "totalEarnings": "Total Earnings"
+    }
+  },
+  "ageGate": {
+    "title": "Verify your age",
+    "creatorDescription": "To become a creator, we need to verify you are 18 years or older.",
+    "fanDescription": "To view sensitive content, we need to verify you are 18 years or older."
+  },
+  "nsfw": {
+    "overlayTitle": "Sensitive Content",
+    "overlayAction": "Verify age in settings to view",
+    "profileGateTitle": "This creator posts sensitive content",
+    "profileGateDescription": "To see all of their posts, including potentially sensitive ones, you need to be age-verified. You can manage this in your privacy settings.",
+    "profileGateAction": "Go to Settings"
+  },
+  "profilePage": {
+      "backToHome": "Back to Home",
+      "noPosts": "No posts yet!",
+      "nsfwBlurb": "This creator's safe-for-work posts will appear here.",
+      "noPostsBlurb": "This creator hasn't posted anything yet. Check back later!",
+      "userNotAvailable": "User Not Available",
+      "cannotViewProfile": "You cannot view this profile."
+  },
+  "dashboard": {
+      "creatorDashboard": "Creator Dashboard",
+      "thisMonthPerformance": "This Month's Performance",
+      "monthlyRevenue": "Monthly Revenue",
+      "totalSubscribers": "Total Subscribers",
+      "subscriberGrowth": "Subscriber Growth",
+      "earningsBreakdown": "Earnings Breakdown",
+      "audienceManagement": "Audience Management",
+      "audienceManagementDesc": "Create custom lists to send exclusive content.",
+      "manageFanLists": "Manage Fan Lists",
+      "fanDashboard": "Fan Dashboard",
+      "fanDashboardDesc": "Use 'Profile' and 'Settings' to manage your account.",
+      "backToHome": "Back to Home",
+      "loadingStats": "Loading stats..."
+  },
+  "aiGenerator": {
+      "title": "AI Content Idea Generator",
+      "description": "Stuck? Describe a theme or topic and let AI brainstorm for you.",
+      "errorTopic": "Please enter a topic.",
+      "errorFailed": "Failed to generate ideas. Please try again.",
+      "generating": "Generating...",
+      "generate": "Generate Ideas"
+  },
+  "auth": {
+      "login": "Log In",
+      "signup": "Sign Up",
+      "welcomeBack": "Welcome Back!",
+      "join": "Join TheFreed",
+      "loginToContinue": "Log in to continue.",
+      "createAccountJourney": "Create an account to start your journey.",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "iAmA": "I am a...",
+      "fan": "Fan",
+      "creator": "Creator",
+      "processing": "Processing...",
+      "createAccount": "Create Account"
+  },
+  "subModal": {
+      "confirmed": "Subscription Confirmed!",
+      "welcome": "Welcome! You now have full access to {{creatorName}}'s content.",
+      "subscribingTo": "You are subscribing to",
+      "choosePlan": "Choose your plan",
+      "continueToPayment": "Continue to Payment",
+      "backToPlans": "Back to plans",
+      "monthPlan": "{{months}}-Month Plan",
+      "save": "SAVE {{savings}}"
+  },
+  "ppvModal": {
+      "unlocked": "Content Unlocked!",
+      "unlockedDesc": "You can now view this exclusive post from {{creatorName}}.",
+      "title": "Unlock Exclusive Post",
+      "fromCreator": "from {{creatorName}}",
+      "unlockButton": "Unlock Post: ${{price}}"
+  },
+  "tipModal": {
+      "sent": "Tip Sent!",
+      "thankYou": "Thank you for supporting {{creatorName}}!",
+      "sendingTo": "You are sending a tip to",
+      "amount": "Amount",
+      "customAmount": "Custom Amount",
+      "continue": "Continue",
+      "tipAmount": "Tip Amount",
+      "sendButton": "Send Tip: ${{price}}"
+  },
+  "payment": {
+      "payWithSaved": "Pay with your saved card:",
+      "cardEndingIn": "{{brand}} ending in {{last4}}",
+      "useDifferentCard": "Use a different card",
+      "processing": "Processing...",
+      "cardNumber": "Card Number",
+      "expiryDate": "Expiry Date",
+      "cvc": "CVC",
+      "saveCard": "Save this card for future purchases",
+      "simulationWarning": "This is a simulated payment form. Do not enter real card details."
+  },
+  "fanProfile": {
+      "joinedOn": "Joined on {{date}}",
+      "activeSubs": "Active Subscriptions",
+      "savedPosts": "Saved Posts",
+      "expired": "Expired",
+      "noActiveSubs": "You are not subscribed to any creators yet.",
+      "noSavedPosts": "You have no saved posts.",
+      "noExpiredSubs": "You have no expired subscriptions.",
+      "achievements": "Achievements",
+      "viewAll": "View All",
+      "noAchievements": "No achievements unlocked yet."
+  },
+  "creatorCard": {
+      "subscribeFor": "Subscribe for ${{price}}/mo",
+      "subscribeFree": "Subscribe for Free"
+  },
+  "bookmarks": {
+      "backToHome": "Back to Home",
+      "title": "Your Saved Posts",
+      "noPosts": "No saved posts yet",
+      "noPostsDesc": "Click the bookmark icon on any post to save it for later."
+  },
+  "imageUpload": {
+      "change": "Change",
+      "clickToUpload": "Click to upload"
+  },
+  "common": {
+      "saving": "Saving...",
+      "saveChanges": "Save Changes",
+      "saved": "Saved",
+      "cancel": "Cancel"
+  },
+  "addStory": {
+    "cameraErrorTitle": "Camera Error",
+    "cameraPermissionError": "Camera permission is required to create a story. Please enable it in your browser settings.",
+    "cameraGenericError": "Could not access the camera. It might be in use by another application or not available.",
+    "tryAgain": "Try Again",
+    "nsfwLabel": "18+ Content (NSFW)",
+    "postButton": "Post to Story",
+    "postingButton": "Posting...",
+    "selectImageError": "Please select an image file.",
+    "cameraPreview": "Camera preview"
+  }
+}

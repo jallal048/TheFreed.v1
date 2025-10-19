@@ -1,0 +1,8 @@
+{
+  "name": "TheFreed",
+  "description": "A web platform that allows content creators to monetize their exclusive content through a subscription system. Fans pay a monthly fee to access a creator's private feed. This demo showcases the creator profile view and an AI-powered content idea generator.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "prompt": ""
+}

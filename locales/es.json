@@ -1,0 +1,382 @@
+
+{
+  "nav": {
+    "home": "Inicio",
+    "discover": "Descubrir",
+    "rankings": "Clasificaciones",
+    "create": "Crear",
+    "messages": "Mensajes",
+    "profile": "Perfil",
+    "schedule": "Agenda"
+  },
+  "header": {
+    "searchPlaceholder": "Buscar creadores o publicaciones...",
+    "myPublicProfile": "Mi Perfil Público",
+    "profile": "Perfil",
+    "dashboard": "Panel",
+    "savedPosts": "Guardados",
+    "referrals": "Referidos",
+    "settings": "Ajustes",
+    "logout": "Cerrar Sesión",
+    "login": "Iniciar Sesión",
+    "signUpFree": "Regístrate Gratis",
+    "notifications": "Notificaciones",
+    "noNotifications": "No hay notificaciones nuevas."
+  },
+  "creatorProfile": {
+    "posts": "Publicaciones",
+    "likes": "Me gusta",
+    "subscribers": "Suscriptores",
+    "editProfile": "Editar Perfil",
+    "sendMessage": "Enviar Mensaje",
+    "subscribeFor": "Suscríbete por ${{price}}/mes",
+    "subscribeFree": "Suscríbete Gratis",
+    "categories": "Categorías",
+    "socialLinks": "Redes Sociales"
+  },
+  "rankingsPage": {
+    "title": "Clasificación de Creadores",
+    "description": "Descubre a los mejores creadores de la plataforma.",
+    "points": "puntos",
+    "emptyTitle": "Aún no hay creadores aquí",
+    "noCreatorsInRank": "Actualmente no hay creadores en el rango de {{rank}}.",
+    "filterByCategory": "Filtrar por Categoría",
+    "allCategories": "Todas las Categorías",
+    "emptyFilterTitle": "No se encontraron Creadores",
+    "noCreatorsInFilter": "Ningún creador coincide con el filtro seleccionado en el rango de {{rank}}."
+  },
+  "discoverPage": {
+    "title": "Descubrir",
+    "description": "Explora publicaciones de todos los creadores de la plataforma.",
+    "searchPlaceholder": "Buscar creadores, publicaciones o #hashtags...",
+    "searchResults": {
+      "creators": "Creadores",
+      "posts": "Publicaciones",
+      "hashtags": "Hashtags",
+      "viewAll": "Ver todos los resultados",
+      "noResults": "No se encontraron resultados para"
+    },
+    "all": "Todos"
+  },
+  "homePage": {
+    "title": "Inicio",
+    "emptyFeedTitle": "¡Tu feed se ve un poco vacío!",
+    "emptyFeedDescription": "Suscríbete a creadores para ver sus publicaciones aquí. Empieza por encontrar nuevos creadores a los que apoyar.",
+    "discoverCreators": "Descubrir Creadores"
+  },
+  "landingPage": {
+    "heroTitle": "Tu contenido. Tus reglas. Tu libertad.",
+    "heroSubtitle": "La plataforma definitiva donde los creadores construyen su imperio y los fans descubren contenido auténtico y exclusivo. Sin algoritmos, sin intermediarios.",
+    "cta": {
+      "imACreator": "Soy Creador/a",
+      "imAFan": "Soy Fan",
+      "startEarning": "Empieza a Ganar Hoy",
+      "startExploring": "Empieza a Explorar",
+      "signUpForFree": "Regístrate Gratis"
+    },
+    "socialProof": {
+      "title": "Con la confianza de la nueva generación de creadores"
+    },
+    "creatorSection": {
+      "title": "Libertad para Creadores",
+      "feature1": { "title": "Monetiza tu Pasión", "desc": "Gana dinero con suscripciones mensuales, propinas y contenido de pago por visión (PPV). Tú pones el precio, te quedas con la mayor parte." },
+      "feature2": { "title": "Conexión Directa", "desc": "Olvídate de los algoritmos. Habla directamente con tus fans a través de un feed privado, historias y mensajería directa. Construye una comunidad real." },
+      "feature3": { "title": "Herramientas Poderosas", "desc": "Analiza tus estadísticas, programa tus publicaciones y obtén ideas de contenido con nuestra IA integrada. Todas las herramientas que necesitas para crecer." },
+      "feature4": { "title": "Seguridad y Control", "desc": "Tú decides quién ve tu contenido. Con nuestra verificación de edad y robustas herramientas de moderación, creas en un entorno seguro." }
+    },
+    "fanSection": {
+      "title": "Libertad para Fans",
+      "feature1": { "title": "Acceso Exclusivo", "desc": "Desbloquea contenido que no encontrarás en ningún otro lugar. Apoya directamente a los creadores que admiras y sé parte de su viaje." },
+      "feature2": { "title": "Interacción Real", "desc": "Comenta, da 'me gusta' y envía mensajes directos. En TheFreed, no eres solo un número, eres parte de una comunidad." },
+      "feature3": { "title": "Descubre sin Límites", "desc": "Explora una galaxia de artistas, podcasters, músicos y más. Nuestro feed de descubrimiento está diseñado para que encuentres tu próxima obsesión." }
+    },
+    "howItWorks": {
+      "title": "Empezar es Sencillo",
+      "step1": { "title": "Crea tu Perfil", "desc": "Regístrate en segundos como Creador o Fan. Personaliza tu perfil para que el mundo te conozca." },
+      "step2": {
+        "creator": { "title": "Publica tu Contenido", "desc": "Sube tus creaciones, establece tus precios y decide quién puede verlo. ¡La libertad es tuya!" },
+        "fan": { "title": "Suscríbete y Apoya", "desc": "Encuentra creadores que te inspiren, suscríbete y accede a su mundo exclusivo al instante." }
+      },
+      "step3": { "title": "Conecta y Crece", "desc": "Interactúa, crece y forma parte de una comunidad basada en el respeto y la creatividad." }
+    },
+    "finalCta": {
+      "title": "¿Listo/a para ser libre?",
+      "subtitle": "Únete a la revolución de los creadores hoy. Tu comunidad te está esperando."
+    },
+    "signUpFree": "Regístrate Gratis",
+    "signIn": "Iniciar Sesión",
+    "testimonials": {
+      "quote1": "TheFreed me ha dado la libertad de conectar con mi audiencia sin preocuparme por la censura o los cambios en el algoritmo.",
+      "role1": "Artista Digital",
+      "quote2": "Finalmente, una plataforma que valora mi trabajo. Mis ingresos se duplicaron en el primer mes.",
+      "role2": "Músico",
+      "quote3": "Me encanta obtener contenido exclusivo de mis creadores favoritos. ¡Se siente como una comunidad real!",
+      "role3": "Fan",
+      "quote4": "La función de mensajería directa ha sido un cambio de juego para conectar con mis suscriptores.",
+      "role4": "Chef"
+    }
+  },
+  "footer": {
+    "product": "Producto",
+    "forCreators": "Para Creadores",
+    "forFans": "Para Fans",
+    "discover": "Descubrir",
+    "company": "Compañía",
+    "about": "Sobre Nosotros",
+    "press": "Prensa",
+    "legal": "Legal",
+    "terms": "Términos de Uso",
+    "privacy": "Política de Privacidad",
+    "guidelines": "Normas de la Comunidad",
+    "copyright": "© 2024 TheFreed. Todos los derechos reservados."
+  },
+  "post": {
+    "locked": {
+      "title": "Te espera contenido exclusivo",
+      "description": "Este contenido es exclusivo para los suscriptores de {{creatorName}}. ¡Únete a su comunidad para desbloquear esta publicación y más!"
+    },
+    "ppv": {
+      "title": "Desbloquear contenido exclusivo",
+      "unlockFor": "Desbloquear por ${{price}}"
+    },
+    "comments": {
+      "addCommentPlaceholder": "Añade un comentario...",
+      "postComment": "Publicar comentario",
+      "topFan": "Fan Destacado",
+      "deleteComment": "Eliminar Comentario",
+      "reportComment": "Reportar Comentario"
+    },
+    "actions": {
+      "tip": "Propina"
+    },
+    "dropdown": {
+      "edit": "Editar Publicación",
+      "boost": "Impulsar Publicación",
+      "delete": "Eliminar Publicación",
+      "deleteConfirmMessage": "¿Seguro que quieres eliminar esta publicación? Esta acción no se puede deshacer.",
+      "saved": "Guardado",
+      "save": "Guardar Publicación",
+      "copyLink": "Copiar Enlace",
+      "report": "Reportar Publicación",
+      "reportPrompt": "Por favor, proporciona una razón para reportar esta publicación:",
+      "reportSuccess": "Gracias por tu reporte. Nuestro equipo de moderación lo revisará en breve.",
+      "copyLinkSuccess": "¡Enlace a la publicación {{postId}} copiado al portapapeles!"
+    }
+  },
+  "createPost": {
+    "setPriceTooltip": "Fijar Precio (PPV)",
+    "setGoalTooltip": "Fijar Objetivo de Recaudación",
+    "ppvDisabledTooltip": "Este creador tiene una suscripción mensual, por lo que las publicaciones individuales no pueden tener precio.",
+    "setPriceLabel": "Fijar Precio (PPV)",
+    "fundraisingGoalLabel": "Objetivo de Recaudación"
+  },
+  "fundraising": {
+    "raised": "${{raised}} de ${{goal}} recaudados",
+    "contribute": "Contribuir"
+  },
+  "onboarding": {
+    "welcome": "¡Bienvenido/a, {{username}}!",
+    "subtitle": "Vamos a configurar tu cuenta de creador.",
+    "nextStep": "Siguiente Paso",
+    "back": "Atrás",
+    "continueToVerification": "Continuar a Verificación",
+    "step1": {
+      "title": "Información Básica del Perfil",
+      "description": "Así es como te verán los fans. Puedes cambiar esto en cualquier momento.",
+      "displayNameLabel": "Nombre Público",
+      "bioLabel": "Biografía",
+      "bioPlaceholder": "Cuéntales a tus fans un poco sobre ti y tu contenido.",
+      "locationLabel": "Ubicación",
+      "locationPlaceholder": "ej. Londres, Reino Unido"
+    },
+    "step2": {
+      "title": "Categoriza tu Contenido",
+      "description": "Ayuda a los fans a descubrirte seleccionando categorías que se ajusten a tu contenido.",
+      "mainCategoryPrompt": "Selecciona 1 categoría principal:",
+      "subCategoryPrompt": "Selecciona hasta 3 subcategorías:"
+    },
+    "step3": {
+      "title": "Añade tus Redes Sociales",
+      "description": "Permite que tus fans conecten contigo en otras plataformas.",
+      "addLink": "+ Añadir Enlace"
+    },
+    "step4": {
+      "title": "Establece tu Precio",
+      "description": "Elige un precio mensual para tus suscripciones. Podrás ofrecer descuentos más tarde.",
+      "priceLabel": "Precio de Suscripción ($/mes)"
+    },
+    "step5": {
+      "title": "Tu Información Personal",
+      "description": "Estos datos son necesarios para la verificación de edad y los pagos. No se mostrarán en tu perfil público.",
+      "fullNameLabel": "Nombre Legal Completo",
+      "dobLabel": "Fecha de Nacimiento",
+      "addressLabel": "Dirección Residencial"
+    }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "nav": {
+        "profile": "Editar Perfil",
+        "monetization": "Monetización",
+        "payout": "Ajustes de Pago",
+        "account": "Cuenta",
+        "personal": "Datos Personales",
+        "billing": "Info. de Facturación",
+        "wallet": "Mi Cartera",
+        "notifications": "Notificaciones",
+        "privacy": "Privacidad y Seguridad",
+        "support": "Centro de Soporte"
+    },
+    "privacy": {
+      "sensitiveContentTitle": "Mostrar contenido sensible (NSFW)",
+      "sensitiveContentDesc": "Ver contenido que puede ser sensible. Debes ser mayor de 18 años para activar esto."
+    },
+    "referrals": {
+      "title": "Referidos",
+      "description": "¡Invita a creadores a TheFreed y gana un 5% de sus ganancias durante su primer año en la plataforma! Comparte tu enlace único a continuación.",
+      "yourLink": "Tu Enlace de Referido",
+      "copy": "Copiar",
+      "copied": "¡Copiado!",
+      "creatorsReferred": "Creadores Referidos",
+      "totalEarnings": "Ganancias Totales"
+    }
+  },
+  "ageGate": {
+    "title": "Verifica tu edad",
+    "creatorDescription": "Para convertirte en creador, necesitamos verificar que tienes 18 años o más.",
+    "fanDescription": "Para ver contenido sensible, necesitamos verificar que tienes 18 años o más."
+  },
+  "nsfw": {
+    "overlayTitle": "Contenido Sensible",
+    "overlayAction": "Verifica tu edad en ajustes para ver",
+    "profileGateTitle": "Este creador publica contenido sensible",
+    "profileGateDescription": "Para ver todas sus publicaciones, incluyendo las potencialmente sensibles, necesitas verificar tu edad. Puedes gestionar esto en tus ajustes de privacidad.",
+    "profileGateAction": "Ir a Ajustes"
+  },
+  "profilePage": {
+      "backToHome": "Volver a Inicio",
+      "noPosts": "¡Aún no hay publicaciones!",
+      "nsfwBlurb": "Las publicaciones aptas para todo público de este creador aparecerán aquí.",
+      "noPostsBlurb": "Este creador aún no ha publicado nada. ¡Vuelve más tarde!",
+      "userNotAvailable": "Usuario No Disponible",
+      "cannotViewProfile": "No puedes ver este perfil."
+  },
+  "dashboard": {
+      "creatorDashboard": "Panel de Creador",
+      "thisMonthPerformance": "Rendimiento de este Mes",
+      "monthlyRevenue": "Ingresos Mensuales",
+      "totalSubscribers": "Suscriptores Totales",
+      "subscriberGrowth": "Crecimiento de Suscriptores",
+      "earningsBreakdown": "Desglose de Ingresos",
+      "audienceManagement": "Gestión de Audiencia",
+      "audienceManagementDesc": "Crea listas personalizadas para enviar contenido exclusivo.",
+      "manageFanLists": "Gestionar Listas de Fans",
+      "fanDashboard": "Panel de Fan",
+      "fanDashboardDesc": "Usa 'Perfil' y 'Ajustes' para gestionar tu cuenta.",
+      "backToHome": "Volver a Inicio",
+      "loadingStats": "Cargando estadísticas..."
+  },
+  "aiGenerator": {
+      "title": "Generador de Ideas de Contenido (IA)",
+      "description": "¿Atascado? Describe un tema y deja que la IA te dé ideas.",
+      "errorTopic": "Por favor, introduce un tema.",
+      "errorFailed": "No se pudieron generar ideas. Inténtalo de nuevo.",
+      "generating": "Generando...",
+      "generate": "Generar Ideas"
+  },
+  "auth": {
+      "login": "Iniciar Sesión",
+      "signup": "Registrarse",
+      "welcomeBack": "¡Bienvenido/a de nuevo!",
+      "join": "Únete a TheFreed",
+      "loginToContinue": "Inicia sesión para continuar.",
+      "createAccountJourney": "Crea una cuenta para empezar tu viaje.",
+      "username": "Nombre de usuario",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "iAmA": "Soy un...",
+      "fan": "Fan",
+      "creator": "Creador"
+  },
+  "subModal": {
+      "confirmed": "¡Suscripción Confirmada!",
+      "welcome": "¡Bienvenido/a! Ahora tienes acceso completo al contenido de {{creatorName}}.",
+      "subscribingTo": "Te estás suscribiendo a",
+      "choosePlan": "Elige tu plan",
+      "continueToPayment": "Continuar al Pago",
+      "backToPlans": "Volver a los planes",
+      "monthPlan": "Plan de {{months}} Meses",
+      "save": "AHORRA {{savings}}"
+  },
+  "ppvModal": {
+      "unlocked": "¡Contenido Desbloqueado!",
+      "unlockedDesc": "Ya puedes ver esta publicación exclusiva de {{creatorName}}.",
+      "title": "Desbloquear Publicación Exclusiva",
+      "fromCreator": "de {{creatorName}}",
+      "unlockButton": "Desbloquear Publicación: ${{price}}"
+  },
+  "tipModal": {
+      "sent": "¡Propina Enviada!",
+      "thankYou": "¡Gracias por apoyar a {{creatorName}}!",
+      "sendingTo": "Estás enviando una propina a",
+      "amount": "Cantidad",
+      "customAmount": "Cantidad Personalizada",
+      "continue": "Continuar",
+      "tipAmount": "Importe de la Propina",
+      "sendButton": "Enviar Propina: ${{price}}"
+  },
+  "payment": {
+      "payWithSaved": "Pagar con tu tarjeta guardada:",
+      "cardEndingIn": "{{brand}} terminada en {{last4}}",
+      "useDifferentCard": "Usar otra tarjeta",
+      "processing": "Procesando...",
+      "cardNumber": "Número de Tarjeta",
+      "expiryDate": "Fecha de Caducidad",
+      "cvc": "CVC",
+      "saveCard": "Guardar esta tarjeta para futuras compras",
+      "simulationWarning": "Este es un formulario de pago simulado. No introduzcas datos reales."
+  },
+  "fanProfile": {
+      "joinedOn": "Se unió el {{date}}",
+      "activeSubs": "Suscripciones Activas",
+      "savedPosts": "Publicaciones Guardadas",
+      "expired": "Expiradas",
+      "noActiveSubs": "Aún no te has suscrito a ningún creador.",
+      "noSavedPosts": "No tienes publicaciones guardadas.",
+      "noExpiredSubs": "No tienes suscripciones expiradas.",
+      "achievements": "Logros",
+      "viewAll": "Ver Todos",
+      "noAchievements": "Aún no has desbloqueado ningún logro."
+  },
+  "creatorCard": {
+      "subscribeFor": "Suscríbete por ${{price}}/mes",
+      "subscribeFree": "Suscríbete Gratis"
+  },
+  "bookmarks": {
+      "backToHome": "Volver a Inicio",
+      "title": "Tus Publicaciones Guardadas",
+      "noPosts": "Aún no hay publicaciones guardadas",
+      "noPostsDesc": "Haz clic en el icono de marcador en cualquier publicación para guardarla para más tarde."
+  },
+  "imageUpload": {
+      "change": "Cambiar",
+      "clickToUpload": "Haz clic para subir"
+  },
+  "common": {
+      "saving": "Guardando...",
+      "saveChanges": "Guardar Cambios",
+      "saved": "Guardado",
+      "cancel": "Cancelar"
+  },
+  "addStory": {
+    "cameraErrorTitle": "Error de Cámara",
+    "cameraPermissionError": "Se requiere permiso de cámara para crear una historia. Por favor, actívalo en la configuración de tu navegador.",
+    "cameraGenericError": "No se pudo acceder a la cámara. Podría estar en uso por otra aplicación o no estar disponible.",
+    "tryAgain": "Intentar de Nuevo",
+    "nsfwLabel": "Contenido 18+ (NSFW)",
+    "postButton": "Publicar en Historia",
+    "postingButton": "Publicando...",
+    "selectImageError": "Por favor, selecciona un archivo de imagen.",
+    "cameraPreview": "Vista previa de la cámara"
+  }
+}
