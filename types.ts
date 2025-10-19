@@ -184,12 +184,6 @@ export interface Post {
   isNsfw?: boolean;
 }
 
-export interface ContentIdea {
-    title: string;
-    type: 'Text' | 'Photo' | 'Video';
-    description: string;
-}
-
 // Notifications
 export type NotificationType = 'like' | 'comment' | 'new_subscriber' | 'tip';
 export interface Notification {
