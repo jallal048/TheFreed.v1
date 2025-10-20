@@ -6,42 +6,12 @@
     <title>TheFreed</title>
     <link rel="preconnect" href="https://rsms.me/">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            keyframes: {
-              'grid-pan': {
-                '0%': { transform: 'translateX(0) translateY(0) scale(1.5) skewY(-12deg)' },
-                '100%': { transform: 'translateX(-20px) translateY(20px) scale(1.5) skewY(-12deg)' },
-              },
-              scroll: {
-                '0%': { transform: 'translateX(0)' },
-                '100%': { transform: 'translateX(-50%)' },
-              },
-              shimmer: {
-                '0%': { backgroundPosition: '-1000px 0' },
-                '100%': { backgroundPosition: '1000px 0' },
-              },
-            },
-            animation: {
-              'grid-pan': 'grid-pan 30s linear infinite alternate',
-              scroll: 'scroll 40s linear infinite',
-              shimmer: 'shimmer 2s infinite linear',
-            },
-          },
-        },
-      }
-    </script>
   <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.1.0",
     "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
-    "react/": "https://esm.sh/react@^19.1.0/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.11.0"
+    "react/": "https://esm.sh/react@^19.1.0/"
   }
 }
 </script>
