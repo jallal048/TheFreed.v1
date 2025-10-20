@@ -1,40 +1,46 @@
 import React from 'react';
-import { Icon } from './Icon';
 import { useNavigation } from '../contexts/NavigationProvider';
-import { useModals } from '../contexts/ModalProvider';
-import { useLocale } from '../contexts/LocaleProvider';
-import { useAuth } from '../contexts/AuthContext';
+import { Icon } from './Icon';
 
-const NavItem: React.FC<{ icon: string; label: string; isActive: boolean; onClick: () => void; }> = ({ icon, label, isActive, onClick }) => (
-    <button onClick={onClick} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-lg ${isActive ? 'bg-indigo-100 dark:bg-indigo-600/20 text-indigo-700 dark:text-indigo-300 font-bold' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-white'}`} aria-current={isActive ? 'page' : undefined}>
-        <Icon name={icon} className="w-6 h-6" />
-        {label}
-    </button>
-);
+const prefetch = (page: string) => {
+  // Hint the browser to fetch next chunks when user is about to navigate
+  switch (page) {
+    case 'discover': import('../pages/DiscoverPage'); break;
+    case 'messages': import('../pages/MessagesPage'); break;
+    case 'profile': import('../pages/ProfilePage'); break;
+    case 'rankings': import('../pages/RankingsPage'); break;
+    case 'explore': import('../pages/ExplorePage'); break;
+    case 'settings': import('../pages/SettingsPage'); break;
+    case 'adminDashboard': import('../AdminApp'); break;
+    default: break;
+  }
+};
 
 export const Sidebar: React.FC = () => {
-    const { view, onGoToHome, onGoToDiscover, onGoToMessages, onGoToMyProfile, onGoToRankings } = useNavigation();
-    const { currentUser } = useAuth();
-    const { t } = useLocale();
+  const nav = useNavigation();
 
-    const isMyProfileActive =
-        view.page === 'fanProfile' ||
-        (view.page === 'profile' && view.creator?.id === currentUser?.creatorId);
-    
-    return (
-        <aside className="hidden md:flex flex-col w-64 h-screen fixed top-0 left-0 bg-white dark:bg-black border-r border-gray-200 dark:border-gray-900 p-4">
-            <div className="flex items-center gap-3 cursor-pointer flex-shrink-0 px-2 pt-2 pb-6">
-                <Icon name="logo" className="h-9 w-9 text-indigo-500 dark:text-indigo-400" />
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">TheFreed</h1>
-            </div>
-
-            <nav className="flex flex-col gap-2">
-                <NavItem icon="home" label={t('nav.home')} isActive={view.page === 'home'} onClick={onGoToHome} />
-                <NavItem icon="compass" label={t('nav.discover')} isActive={view.page === 'discover' || view.page === 'explore'} onClick={onGoToDiscover} />
-                <NavItem icon="chart-bar" label={t('nav.rankings')} isActive={view.page === 'rankings'} onClick={onGoToRankings} />
-                <NavItem icon="chat-bubble-left-right" label={t('nav.messages')} isActive={view.page === 'messages'} onClick={onGoToMessages} />
-                <NavItem icon="user" label={t('nav.profile')} isActive={isMyProfileActive} onClick={onGoToMyProfile} />
-            </nav>
-        </aside>
-    );
+  return (
+    <aside className="hidden md:block fixed inset-y-0 left-0 w-64 bg-white/80 dark:bg-zinc-900/80 backdrop-blur border-r border-zinc-200/60 dark:border-zinc-800/60">
+      <nav className="p-4 space-y-1">
+        <button onMouseEnter={() => prefetch('home')} onClick={nav.onGoToHome} className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+          <Icon name="home" /> <span>Home</span>
+        </button>
+        <button onMouseEnter={() => prefetch('discover')} onClick={nav.onGoToDiscover} className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+          <Icon name="compass" /> <span>Discover</span>
+        </button>
+        <button onMouseEnter={() => prefetch('messages')} onClick={nav.onGoToMessages} className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+          <Icon name="envelope" /> <span>Messages</span>
+        </button>
+        <button onMouseEnter={() => prefetch('rankings')} onClick={nav.onGoToRankings} className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+          <Icon name="rankings" /> <span>Rankings</span>
+        </button>
+        <button onMouseEnter={() => prefetch('explore')} onClick={() => nav.onGoToExplore()} className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+          <Icon name="globe-alt" /> <span>Explore</span>
+        </button>
+        <button onMouseEnter={() => prefetch('settings')} onClick={nav.onGoToSettings} className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
+          <Icon name="cog-6-tooth" /> <span>Settings</span>
+        </button>
+      </nav>
+    </aside>
+  );
 };
