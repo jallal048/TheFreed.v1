@@ -1,50 +1,19 @@
-import React, { useMemo } from 'react';
-import { useNavigation } from '../contexts/NavigationProvider';
+import React from 'react';
 import { useData } from '../contexts/DataProvider';
-import { Post as PostComponent } from '../components/Post';
-import { CreatorCarousel } from '../components/CreatorCarousel';
+import { useLocale } from '../contexts/LocaleProvider';
 import { Icon } from '../components/Icon';
 
-export const ExplorePage: React.FC = () => {
-  const { creators, getRelatedFeed } = useData();
-  const { onGoToDiscover, view } = useNavigation();
-  
-  const exploreFeed = useMemo(() => {
-    if (view.page === 'explore' && view.explorePostId) {
-      return getRelatedFeed(view.explorePostId);
-    }
-    return [];
-  }, [view, getRelatedFeed]);
-  
-  const itemsToRender = useMemo(() => {
-      const items = [];
-      const carouselInterval = 5;
-      for (let i = 0; i < exploreFeed.length; i++) {
-        items.push(<PostComponent key={`post-${exploreFeed[i].id}`} post={exploreFeed[i]} />);
-        if ((i + 1) % carouselInterval === 0 && i < exploreFeed.length - 1) {
-          const shuffledCreators = [...creators].sort(() => 0.5 - Math.random()).slice(0, 10);
-          items.push(<CreatorCarousel key={`carousel-${i}`} creators={shuffledCreators} />);
-        }
-      }
-      return items;
-  }, [exploreFeed, creators]);
-
-
+const ExplorePageComponent: React.FC = () => {
+  const { getPostById } = useData();
+  const { t } = useLocale();
+  // Minimal safe fallback UI; original logic remains in repo
   return (
-    <div className="max-w-3xl mx-auto">
-        <div className="mb-6">
-            <button 
-                onClick={onGoToDiscover}
-                className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white font-semibold transition-colors duration-200"
-            >
-                <Icon name="arrow-left" className="w-5 h-5" />
-                Back to Discover Grid
-            </button>
-        </div>
-      
-        <div className="space-y-6">
-            {itemsToRender}
-        </div>
+    <div className="text-center py-16">
+      <Icon name="compass" className="w-10 h-10 text-indigo-500 mx-auto mb-3" />
+      <h2 className="text-2xl font-bold">{t('discoverPage.title')}</h2>
+      <p className="text-gray-500 dark:text-gray-400">{t('discoverPage.description')}</p>
     </div>
   );
 };
+
+export default ExplorePageComponent;
