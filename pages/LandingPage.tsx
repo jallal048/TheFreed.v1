@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Icon } from '../components/Icon';
 import { mockCreators } from '../constants';
@@ -204,65 +202,66 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onCreatorJoinClick, on
             </button>
           </div>
         </section>
+      </main>
 
-        <footer className="bg-gray-50 dark:bg-gray-900 py-12">
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-left mb-8">
-                    <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('footer.product')}</h4>
-                        <ul className="space-y-2">
-                           <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.forCreators')}</button></li>
-                           <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.forFans')}</button></li>
-                           <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.discover')}</button></li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('footer.company')}</h4>
-                        <ul className="space-y-2">
-                           <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.about')}</button></li>
-                           <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.press')}</button></li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('footer.legal')}</h4>
-                        <ul className="space-y-2">
-                           <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.terms')}</button></li>
-                           <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.privacy')}</button></li>
-                           <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.guidelines')}</button></li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Support</h4>
-                        <ul className="space-y-2">
-                           <li><button onClick={onGoToSupport} className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">Contact Us</button></li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
-                    <p className="text-gray-500 text-sm">{t('footer.copyright')}</p>
-                    <div className="flex gap-4 mt-4 sm:mt-0">
-                         <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"><Icon name="twitter" className="w-6 h-6"/></a>
-                         <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"><Icon name="instagram" className="w-6 h-6"/></a>
-                         <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"><Icon name="youtube" className="w-6 h-6"/></a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+      <footer className="bg-gray-50 dark:bg-gray-900 py-12">
+          <div className="container mx-auto px-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-left mb-8">
+                  <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('footer.product')}</h4>
+                      <ul className="space-y-2">
+                         <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.forCreators')}</button></li>
+                         <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.forFans')}</button></li>
+                         <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.discover')}</button></li>
+                      </ul>
+                  </div>
+                   <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('footer.company')}</h4>
+                      <ul className="space-y-2">
+                         <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.about')}</button></li>
+                         <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.press')}</button></li>
+                      </ul>
+                  </div>
+                   <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('footer.legal')}</h4>
+                      <ul className="space-y-2">
+                         <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.terms')}</button></li>
+                         <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.privacy')}</button></li>
+                         <li><button className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">{t('footer.guidelines')}</button></li>
+                      </ul>
+                  </div>
+                   <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Support</h4>
+                      <ul className="space-y-2">
+                         <li><button onClick={onGoToSupport} className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">Contact Us</button></li>
+                      </ul>
+                  </div>
+              </div>
+              <div className="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
+                  <p className="text-gray-500 text-sm">{t('footer.copyright')}</p>
+                  <div className="flex gap-4 mt-4 sm:mt-0">
+                       <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"><Icon name="twitter" className="w-6 h-6"/></a>
+                       <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"><Icon name="instagram" className="w-6 h-6"/></a>
+                       <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"><Icon name="youtube" className="w-6 h-6"/></a>
+                  </div>
+              </div>
+          </div>
+      </footer>
 
-        <style>{`
-            .scrolling-wrapper {
-                display: flex;
-                width: max-content;
-            }
-            .scrolling-content {
-                display: flex;
-                animation: scroll 60s linear infinite;
-            }
-            @keyframes scroll {
-                from { transform: translateX(0); }
-                to { transform: translateX(-50%); }
-            }
-        `}</style>
+      <style>{`
+          .scrolling-wrapper {
+              display: flex;
+              width: max-content;
+          }
+          .scrolling-content {
+              display: flex;
+              animation: scroll 60s linear infinite;
+          }
+          @keyframes scroll {
+              from { transform: translateX(0); }
+              to { transform: translateX(-50%); }
+          }
+      `}</style>
     </div>
   );
 };
