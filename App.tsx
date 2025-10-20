@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataProvider';
@@ -11,39 +9,13 @@ import { AuthModal } from './components/AuthModal';
 import { SubscriptionModal } from './components/SubscriptionModal';
 import { PpvModal } from './components/PpvModal';
 import { TipModal } from './components/TipModal';
-import { DiscoverPage } from './pages/DiscoverPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { DashboardPage } from './pages/DashboardPage';
-import { LandingPage } from './pages/LandingPage';
-import { HomePage } from './pages/HomePage';
-import { FanProfilePage } from './pages/FanProfilePage';
-import { SettingsPage } from './pages/SettingsPage';
 import { Lightbox } from './components/Lightbox';
-import { SearchPage } from './pages/SearchPage';
-import { MessagesPage } from './pages/MessagesPage';
 import { Sidebar } from './components/Sidebar';
 import { BottomNav } from './components/BottomNav';
-import { BookmarksPage } from './pages/BookmarksPage';
-import { FanListsPage } from './pages/FanListsPage';
 import { ConfirmationModal } from './components/ConfirmationModal';
-import { EditPostModal } from './components/modals/EditPostModal';
 import { AddCardModal } from './components/modals/AddCardModal';
-import { SchedulePage } from './pages/SchedulePage';
-import { ScheduleMessageModal } from './components/modals/ScheduleMessageModal';
 import { AgeGateModal } from './components/AgeGateModal';
-import { CreatorOnboardingPage } from './pages/CreatorOnboardingPage';
-import { EditScheduledPostModal } from './components/modals/EditScheduledPostModal';
-import { ExplorePage } from './pages/ExplorePage';
-import { CreatePostModal } from './components/CreatePostForm';
-import { PpvMessageModal } from './components/modals/PpvMessageModal';
-import { StoryViewer } from './components/stories/StoryViewer';
-import { AddStoryModal } from './components/modals/AddStoryModal';
-import { RankingsPage } from './pages/RankingsPage';
 import { LocaleProvider, useLocale } from './contexts/LocaleProvider';
-import { HashtagPage } from './pages/HashtagPage';
-import { CategoryPage } from './pages/CategoryPage';
-import { AdminApp } from './AdminApp';
-import { UserRole } from './types';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { ImpersonationBanner } from './components/ImpersonationBanner';
 import { AnnouncementsBanner } from './components/AnnouncementsBanner';
@@ -51,7 +23,34 @@ import { SupportPage } from './pages/SupportPage';
 import { useData } from './contexts/DataProvider';
 import { Icon } from './components/Icon';
 import { SuspensionPage } from './pages/SuspensionPage';
-import { AchievementsModal } from './components/modals/AchievementsModal';
+import { UserRole } from './types';
+
+// Lazy-loaded pages and heavy components
+const DiscoverPage = React.lazy(() => import('./pages/DiscoverPage'));
+const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
+const DashboardPage = React.lazy(() => import('./pages/DashboardPage'));
+const LandingPage = React.lazy(() => import('./pages/LandingPage'));
+const HomePage = React.lazy(() => import('./pages/HomePage'));
+const FanProfilePage = React.lazy(() => import('./pages/FanProfilePage'));
+const SettingsPage = React.lazy(() => import('./pages/SettingsPage'));
+const SearchPage = React.lazy(() => import('./pages/SearchPage'));
+const MessagesPage = React.lazy(() => import('./pages/MessagesPage'));
+const BookmarksPage = React.lazy(() => import('./pages/BookmarksPage'));
+const FanListsPage = React.lazy(() => import('./pages/FanListsPage'));
+const SchedulePage = React.lazy(() => import('./pages/SchedulePage'));
+const ExplorePage = React.lazy(() => import('./pages/ExplorePage'));
+const CreatePostModal = React.lazy(() => import('./components/CreatePostForm'));
+const PpvMessageModal = React.lazy(() => import('./components/modals/PpvMessageModal'));
+const StoryViewer = React.lazy(() => import('./components/stories/StoryViewer'));
+const AddStoryModal = React.lazy(() => import('./components/modals/AddStoryModal'));
+const RankingsPage = React.lazy(() => import('./pages/RankingsPage'));
+const HashtagPage = React.lazy(() => import('./pages/HashtagPage'));
+const CategoryPage = React.lazy(() => import('./pages/CategoryPage'));
+const AdminApp = React.lazy(() => import('./AdminApp'));
+const EditPostModal = React.lazy(() => import('./components/modals/EditPostModal'));
+const ScheduleMessageModal = React.lazy(() => import('./components/modals/ScheduleMessageModal'));
+const EditScheduledPostModal = React.lazy(() => import('./components/modals/EditScheduledPostModal'));
+const AchievementsModal = React.lazy(() => import('./components/modals/AchievementsModal'));
 
 const LoggedInApp: React.FC = () => {
   const { view } = useNavigation();
@@ -93,7 +92,9 @@ const LoggedInApp: React.FC = () => {
         <AnnouncementsBanner />
         <Header />
         <main className="p-6 md:p-8 pb-20 md:pb-8">
-          {renderPage()}
+          <React.Suspense fallback={<LoadingScreen />}>
+            {renderPage()}
+          </React.Suspense>
         </main>
       </div>
       <BottomNav />
@@ -105,15 +106,17 @@ const LoggedInApp: React.FC = () => {
       <TipModal />
       <Lightbox />
       <ConfirmationModal />
-      <EditPostModal />
-      <AddCardModal />
-      <ScheduleMessageModal />
-      <EditScheduledPostModal />
-      <CreatePostModal />
-      <PpvMessageModal />
-      <StoryViewer />
-      <AddStoryModal />
-      <AchievementsModal />
+      <React.Suspense fallback={null}>
+        <EditPostModal />
+        <AddCardModal />
+        <ScheduleMessageModal />
+        <EditScheduledPostModal />
+        <CreatePostModal />
+        <PpvMessageModal />
+        <StoryViewer />
+        <AddStoryModal />
+        <AchievementsModal />
+      </React.Suspense>
     </div>
   )
 }
@@ -155,12 +158,21 @@ const AppContent: React.FC = () => {
   }
 
   if (creatorOnboardingUser) {
-    return <CreatorOnboardingPage />;
+    const CreatorOnboardingPage = React.lazy(() => import('./pages/CreatorOnboardingPage'));
+    return (
+      <React.Suspense fallback={<LoadingScreen />}>
+        <CreatorOnboardingPage />
+      </React.Suspense>
+    );
   }
   
   // Handle Admin routing separately. If we are impersonating, we are NOT an admin for routing purposes.
   if (currentUser?.role === UserRole.Admin && !originalAdminUser) {
-    return <AdminApp />;
+    return (
+      <React.Suspense fallback={<LoadingScreen />}>
+        <AdminApp />
+      </React.Suspense>
+    );
   }
   
   if(view.page === 'adminLogin') {
@@ -175,11 +187,13 @@ const AppContent: React.FC = () => {
     return (
       <>
         <AuthModal />
-        <LandingPage 
-          onCreatorJoinClick={() => openAuthModal('signup', UserRole.Creator, refCode || undefined)}
-          onFanJoinClick={() => openAuthModal('signup', UserRole.Fan, refCode || undefined)}
-          onLoginClick={() => openAuthModal('login')} 
-        />
+        <React.Suspense fallback={<LoadingScreen />}>
+          <LandingPage 
+            onCreatorJoinClick={() => openAuthModal('signup', UserRole.Creator, refCode || undefined)}
+            onFanJoinClick={() => openAuthModal('signup', UserRole.Fan, refCode || undefined)}
+            onLoginClick={() => openAuthModal('login')} 
+          />
+        </React.Suspense>
       </>
     );
   }
