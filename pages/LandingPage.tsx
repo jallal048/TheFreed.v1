@@ -21,7 +21,7 @@ const FeatureCard: React.FC<{ icon: string; title: string; description: string; 
     </div>
 );
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onCreatorJoinClick, onFanJoinClick, onLoginClick }) => {
+const LandingPageComponent: React.FC<LandingPageProps> = ({ onCreatorJoinClick, onFanJoinClick, onLoginClick }) => {
   const { t } = useLocale();
   const { onGoToSupport } = useNavigation();
   const featuredImages = mockCreators.slice(0, 32).map(c => c.avatarUrl);
@@ -152,7 +152,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onCreatorJoinClick, on
                <FeatureCard icon="chat-bubble-left-right" title={t('landingPage.fanSection.feature2.title')} description={t('landingPage.fanSection.feature2.desc')} iconBgColor="bg-pink-100 dark:bg-pink-500/20" iconColor="text-pink-500" />
                <FeatureCard icon="compass" title={t('landingPage.fanSection.feature3.title')} description={t('landingPage.fanSection.feature3.desc')} iconBgColor="bg-teal-100 dark:bg-teal-500/20" iconColor="text-teal-500" />
             </div>
-            <button onClick={onFanJoinClick} className="mt-12 bg-gray-900 hover:bg-gray-700 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-gray-900 font-bold py-3 px-8 rounded-full transition-all duration-300 text-lg">
+            <button onClick={onFanJoinClick} className="mt-12 bg-gray-900 hover:bg-gray-700 dark:bg白 dark:hover:bg-gray-200 text-white dark:text-gray-9 font-bold py-3 px-8 rounded-full transition-all duration-300 text-lg">
                 {t('landingPage.cta.startExploring')}
             </button>
           </div>
@@ -167,12 +167,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onCreatorJoinClick, on
                   <svg width="100%" height="100%"><line x1="25%" y1="0" x2="75%" y2="0" strokeWidth="2" strokeDasharray="8" className="stroke-current text-gray-300 dark:text-gray-700"/></svg>
                 </div>
                 <div className="relative flex flex-col items-center">
-                    <div className="w-16 h-16 bg-white dark:bg-gray-900 border-4 border-gray-300 dark:border-gray-700 rounded-full flex items-center justify-center font-bold text-2xl text-indigo-500 mb-4">1</div>
+                    <div className="w-16 h-16 bg-white dark:bg-gray-9 border-4 border-gray-300 dark:border-gray-700 rounded-full flex items-center justify-center font-bold text-2xl text-indigo-500 mb-4">1</div>
                     <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{t('landingPage.howItWorks.step1.title')}</h3>
                     <p className="text-gray-600 dark:text-gray-400">{t('landingPage.howItWorks.step1.desc')}</p>
                 </div>
                  <div className="relative flex flex-col items-center">
-                    <div className="w-16 h-16 bg-white dark:bg-gray-900 border-4 border-gray-300 dark:border-gray-700 rounded-full flex items-center justify-center font-bold text-2xl text-indigo-500 mb-4">2</div>
+                    <div className="w-16 h-16 bg-white dark:bg-gray-9 border-4 border-gray-300 dark:border-gray-700 rounded-full flex items-center justify-center font-bold text-2xl text-indigo-500 mb-4">2</div>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{t('landingPage.howItWorks.step2.creator.title')}</h3>
@@ -180,12 +180,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onCreatorJoinClick, on
                         </div>
                          <div>
                             <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{t('landingPage.howItWorks.step2.fan.title')}</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">{t('landingPage.howItWorks.step2.fan.desc')}</p>
+                            <p className="text-sm text-gray-6 dark:text-gray-400">{t('landingPage.howItWorks.step2.fan.desc')}</p>
                         </div>
                     </div>
                 </div>
                  <div className="relative flex flex-col items-center">
-                    <div className="w-16 h-16 bg-white dark:bg-gray-900 border-4 border-gray-300 dark:border-gray-700 rounded-full flex items-center justify-center font-bold text-2xl text-indigo-500 mb-4">3</div>
+                    <div className="w-16 h-16 bg-white dark:bg-gray-9 border-4 border-gray-300 dark:border-gray-700 rounded-full flex items-center justify-center font-bold text-2xl text-indigo-500 mb-4">3</div>
                     <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{t('landingPage.howItWorks.step3.title')}</h3>
                     <p className="text-gray-600 dark:text-gray-400">{t('landingPage.howItWorks.step3.desc')}</p>
                 </div>
@@ -265,3 +265,5 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onCreatorJoinClick, on
     </div>
   );
 };
+
+export default LandingPageComponent;
