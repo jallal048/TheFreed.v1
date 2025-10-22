@@ -26,9 +26,8 @@ model User {
   likes      Like[]
   comments   Comment[]
 
-  // Social
-  following  Follow[] @relation("following")
-  followers  Follow[] @relation("followers")
+  // Social: following creators via Follow table
+  following  Follow[] @relation("UserFollowing")
 }
 
 model Creator {
@@ -47,6 +46,9 @@ model Creator {
   userId String @unique
 
   posts  Post[] @relation("CreatorPosts")
+  
+  // Back-reference for followers
+  followers Follow[] @relation("CreatorFollowers")
 }
 
 model Post {
@@ -97,9 +99,9 @@ model Comment {
 
 model Follow {
   id           String   @id @default(cuid())
-  follower     User     @relation("following", fields: [followerId], references: [id], onDelete: Cascade)
+  follower     User     @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
   followerId   String
-  following    Creator  @relation(fields: [followingId], references: [id], onDelete: Cascade)
+  following    Creator  @relation("CreatorFollowers", fields: [followingId], references: [id], onDelete: Cascade)
   followingId  String
   createdAt    DateTime @default(now())
 
