@@ -11,14 +11,20 @@
     "prisma:studio": "prisma studio",
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "api:dev": "tsx server/index.ts",
+    "api:build": "tsc -p tsconfig.server.json",
+    "api:start": "node dist/server/index.js"
   },
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "lucide-react": "^0.263.1",
     "date-fns": "^2.30.0",
-    "@prisma/client": "^6.17.1"
+    "@prisma/client": "^6.17.1",
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
