@@ -1,13 +1,11 @@
 import { PrismaClient, UserRole, PostType, CreatorRank } from '@prisma/client';
-import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log('🌱 Iniciando seed de la base de datos...');
 
-  // Limpiar datos existentes
-  console.log('🧹 Limpiando datos existentes...');
+  // Limpiar datos existentes (orden por FK)
   await prisma.autoModFlag.deleteMany();
   await prisma.report.deleteMany();
   await prisma.announcement.deleteMany();
@@ -35,8 +33,7 @@ async function main() {
   await prisma.creator.deleteMany();
   await prisma.user.deleteMany();
 
-  // Crear configuración de plataforma
-  console.log('⚙️ Creando configuración de plataforma...');
+  // Configuración de plataforma
   await prisma.platformSettings.create({
     data: {
       id: 'singleton',
@@ -83,55 +80,7 @@ async function main() {
     }
   });
 
-  // Crear achievements
-  console.log('🏆 Creando sistema de logros...');
-  const achievements = await Promise.all([
-    prisma.achievement.create({
-      data: {
-        name: 'Primer Tip',
-        description: 'Envía tu primer tip a un creador',
-        icon: '💸',
-        criteriaJson: { type: 'first_tip' }
-      }
-    }),
-    prisma.achievement.create({
-      data: {
-        name: 'Explorador',
-        description: 'Visita 100 perfiles de creadores',
-        icon: '🧭',
-        criteriaJson: { type: 'profile_visits', target: 100 }
-      }
-    }),
-    prisma.achievement.create({
-      data: {
-        name: 'Mecenas',
-        description: 'Suscríbete a 10 creadores',
-        icon: '👑',
-        criteriaJson: { type: 'subscriptions', target: 10 }
-      }
-    }),
-    prisma.achievement.create({
-      data: {
-        name: 'Primeros 1,000 Likes',
-        description: 'Recibe 1,000 likes en tus posts',
-        icon: '❤️',
-        criteriaJson: { type: 'total_likes', target: 1000 }
-      }
-    }),
-    prisma.achievement.create({
-      data: {
-        name: 'Post Viral',
-        description: 'Recibe 100 likes en 24 horas',
-        icon: '🚀',
-        criteriaJson: { type: 'viral_post', likes: 100, hours: 24 }
-      }
-    })
-  ]);
-
-  // Crear usuarios de prueba
-  console.log('👥 Creando usuarios de prueba...');
-  
-  // Admin
+  // Usuarios
   const adminUser = await prisma.user.create({
     data: {
       email: 'admin@thefreed.com',
@@ -140,11 +89,12 @@ async function main() {
       avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin',
       isAgeVerified: true,
       fullName: 'Administrador',
-      registeredAt: new Date('2025-01-01')
+      registeredAt: new Date('2025-01-01'),
+      mutedConversationsJson: [],
+      viewedStoriesJson: []
     }
   });
 
-  // Fan de prueba
   const fanUser = await prisma.user.create({
     data: {
       email: 'fan@test.com',
@@ -155,11 +105,12 @@ async function main() {
       showSensitiveContent: true,
       fullName: 'Juan Fan',
       dateOfBirth: new Date('1995-05-15'),
-      registeredAt: new Date('2025-02-01')
+      registeredAt: new Date('2025-02-01'),
+      mutedConversationsJson: [],
+      viewedStoriesJson: []
     }
   });
 
-  // Creador de prueba
   const creatorUser = await prisma.user.create({
     data: {
       email: 'creator@test.com',
@@ -169,16 +120,18 @@ async function main() {
       isAgeVerified: true,
       fullName: 'Aurora Martinez',
       dateOfBirth: new Date('1992-08-20'),
-      registeredAt: new Date('2025-01-15')
+      registeredAt: new Date('2025-01-15'),
+      mutedConversationsJson: [],
+      viewedStoriesJson: []
     }
   });
 
-  // Crear perfil de creador
+  // Perfil de creador
   const creator = await prisma.creator.create({
     data: {
       userId: creatorUser.id,
       displayName: 'Aurora Arts',
-      bio: 'Artista digital especializada en arte fantástico y retratos. Creando mundos mágicos pixel a pixel ✨',
+      bio: 'Artista digital especializada en arte fantástico y retratos ✨',
       location: 'Barcelona, España',
       avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aurora',
       bannerUrl: 'https://picsum.photos/1200/400?random=aurora',
@@ -186,9 +139,9 @@ async function main() {
       isVerified: true,
       followerCount: 1250,
       subscriberCount: 89,
-      totalEarnings: 5420.50,
+      totalEarnings: 5420.5,
       mainCategory: 'Arte y Creatividad',
-      subCategories: ['Diseño Digital', 'Fotografía'],
+      subCategoriesJson: ['Diseño Digital', 'Fotografía'],
       rank: CreatorRank.GOLD,
       creatorScore: 4.8,
       globalPercentile: 85.5,
@@ -205,7 +158,7 @@ async function main() {
     }
   });
 
-  // Crear suscripción del fan al creador
+  // Suscripción y follow
   await prisma.subscription.create({
     data: {
       userId: fanUser.id,
@@ -216,7 +169,6 @@ async function main() {
     }
   });
 
-  // Crear follow
   await prisma.follow.create({
     data: {
       followerId: fanUser.id,
@@ -224,14 +176,13 @@ async function main() {
     }
   });
 
-  // Crear posts de ejemplo
-  console.log('📝 Creando posts de ejemplo...');
-  
+  // Posts
   const posts = await Promise.all([
     prisma.post.create({
       data: {
         text: '¡Nuevo arte digital terminado! ¿Qué les parece este retrato fantástico? ✨🎨',
         type: PostType.PUBLIC,
+        format: 'TEXT',
         creatorId: creator.id,
         authorId: creatorUser.id,
         mediaJson: [
@@ -246,7 +197,8 @@ async function main() {
     prisma.post.create({
       data: {
         text: 'Proceso de creación de mi última obra. Solo para suscriptores 💎',
-        type: PostType.SUBSCRIBER_ONLY,
+        type: 'SUBSCRIBER_ONLY',
+        format: 'GALLERY',
         creatorId: creator.id,
         authorId: creatorUser.id,
         mediaJson: [
@@ -261,9 +213,10 @@ async function main() {
     }),
     prisma.post.create({
       data: {
-        text: 'Contenido exclusivo premium - Tutorial completo de iluminación digital',
-        type: PostType.PAY_PER_VIEW,
+        text: 'Contenido premium PPV - Tutorial completo de iluminación digital',
+        type: 'PAY_PER_VIEW',
         ppvPrice: 9.99,
+        format: 'GALLERY',
         creatorId: creator.id,
         authorId: creatorUser.id,
         mediaJson: [
@@ -277,105 +230,64 @@ async function main() {
     })
   ]);
 
-  // Crear likes
-  await prisma.like.create({
+  // Like/Comentario/Bookmark
+  await prisma.like.create({ data: { userId: fanUser.id, postId: posts[0].id } });
+  await prisma.comment.create({ data: { userId: fanUser.id, postId: posts[0].id, text: '¡Increíble trabajo Aurora! 🤩' } });
+  await prisma.bookmark.create({ data: { userId: fanUser.id, postId: posts[1].id } });
+
+  // Transacciones (nota: ahora Transaction.creatorId apunta a Creator.id)
+  await prisma.transaction.create({
     data: {
+      type: 'SUBSCRIPTION',
+      amount: 15.99,
+      platformFee: 2.4,
+      creatorPayout: 13.59,
+      description: 'Suscripción mensual - Aurora Arts',
       userId: fanUser.id,
-      postId: posts[0].id
+      creatorId: creator.id
     }
   });
 
-  // Crear comentarios
-  await prisma.comment.create({
+  await prisma.transaction.create({
     data: {
+      type: 'TIP',
+      amount: 5.0,
+      platformFee: 0.75,
+      creatorPayout: 4.25,
+      description: 'Propina por arte increíble',
       userId: fanUser.id,
-      postId: posts[0].id,
-      text: '¡Increíble trabajo Aurora! Los detalles son impresionantes 🤩'
+      creatorId: creator.id
     }
   });
 
-  // Crear bookmark
-  await prisma.bookmark.create({
+  // Conversación y mensajes
+  const conversation = await prisma.conversation.create({ data: { lastMessageAt: new Date() } });
+  await prisma.conversationParticipant.createMany({
+    data: [
+      { conversationId: conversation.id, userId: fanUser.id },
+      { conversationId: conversation.id, userId: creatorUser.id }
+    ]
+  });
+  await prisma.message.create({
     data: {
-      userId: fanUser.id,
-      postId: posts[1].id
+      content: 'Hola Aurora! Me encanta tu trabajo ✨',
+      senderId: fanUser.id,
+      receiverId: creatorUser.id,
+      conversationId: conversation.id,
+      isRead: true
     }
   });
-
-  // Crear transacciones
-  console.log('💰 Creando transacciones de ejemplo...');
-  
-  await Promise.all([
-    prisma.transaction.create({
-      data: {
-        type: 'SUBSCRIPTION',
-        amount: 15.99,
-        platformFee: 2.40,
-        creatorPayout: 13.59,
-        description: 'Suscripción mensual - Aurora Arts',
-        userId: fanUser.id,
-        creatorId: creatorUser.id
-      }
-    }),
-    prisma.transaction.create({
-      data: {
-        type: 'TIP',
-        amount: 5.00,
-        platformFee: 0.75,
-        creatorPayout: 4.25,
-        description: 'Propina por el arte increíble',
-        userId: fanUser.id,
-        creatorId: creatorUser.id
-      }
-    })
-  ]);
-
-  // Crear conversación y mensajes
-  console.log('💬 Creando mensajes de ejemplo...');
-  
-  const conversation = await prisma.conversation.create({
+  await prisma.message.create({
     data: {
-      lastMessageAt: new Date()
+      content: '¡Hola! Muchas gracias, me alegra que te guste 😊',
+      senderId: creatorUser.id,
+      receiverId: fanUser.id,
+      conversationId: conversation.id,
+      isRead: false
     }
   });
 
-  await Promise.all([
-    prisma.conversationParticipant.create({
-      data: {
-        conversationId: conversation.id,
-        userId: fanUser.id
-      }
-    }),
-    prisma.conversationParticipant.create({
-      data: {
-        conversationId: conversation.id,
-        userId: creatorUser.id
-      }
-    })
-  ]);
-
-  await Promise.all([
-    prisma.message.create({
-      data: {
-        content: 'Hola Aurora! Me encanta tu trabajo ✨',
-        senderId: fanUser.id,
-        receiverId: creatorUser.id,
-        conversationId: conversation.id,
-        isRead: true
-      }
-    }),
-    prisma.message.create({
-      data: {
-        content: '¡Hola! Muchas gracias, me alegra que te guste 😊',
-        senderId: creatorUser.id,
-        receiverId: fanUser.id,
-        conversationId: conversation.id,
-        isRead: false
-      }
-    })
-  ]);
-
-  // Crear notificaciones
+  // Notificación y logro
   await prisma.notification.create({
     data: {
       type: 'LIKE',
@@ -386,39 +298,31 @@ async function main() {
     }
   });
 
-  // Asignar achievements
-  await prisma.userAchievement.create({
+  const firstTip = await prisma.achievement.create({
     data: {
-      userId: fanUser.id,
-      achievementId: achievements[0].id // Primer Tip
+      name: 'Primer Tip',
+      description: 'Envía tu primer tip a un creador',
+      icon: '💸',
+      criteriaJson: { type: 'first_tip' }
     }
   });
+  await prisma.userAchievement.create({ data: { userId: fanUser.id, achievementId: firstTip.id } });
 
-  // Crear anuncio global
   await prisma.announcement.create({
     data: {
       title: '¡Bienvenidos a TheFreed!',
-      content: 'Nuestra plataforma ya está en funcionamiento. ¡Disfruta creando y descubriendo contenido increíble!',
+      content: 'La plataforma ya está lista con datos de ejemplo.',
       target: 'ALL',
       isActive: true
     }
   });
 
-  console.log('✅ Seed completado exitosamente!');
-  console.log('📊 Datos creados:');
-  console.log(`   👤 Usuarios: ${await prisma.user.count()}`);
-  console.log(`   🎨 Creadores: ${await prisma.creator.count()}`);
-  console.log(`   📝 Posts: ${await prisma.post.count()}`);
-  console.log(`   💰 Transacciones: ${await prisma.transaction.count()}`);
-  console.log(`   💬 Mensajes: ${await prisma.message.count()}`);
-  console.log(`   🏆 Logros: ${await prisma.achievement.count()}`);
+  console.log('✅ Seed completado');
 }
 
-main()
-  .catch((e) => {
-    console.error('❌ Error en el seed:', e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main().catch((e) => {
+  console.error('❌ Error en el seed:', e);
+  process.exit(1);
+}).finally(async () => {
+  await prisma.$disconnect();
+});
