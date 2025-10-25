@@ -1,3 +1,4 @@
+// TheFreed - Schema completo de base de datos
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,106 +8,582 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// =============================
+// MODELOS DE USUARIO Y AUTENTICACIÓN
+// =============================
+
 model User {
   id                   String    @id @default(cuid())
   email                String    @unique
   username             String    @unique
   role                 UserRole  @default(FAN)
   avatarUrl            String?
+  
+  // Configuración personal
   showSensitiveContent Boolean   @default(false)
+  isAgeVerified        Boolean   @default(false)
+  isProfilePrivate     Boolean   @default(false)
+  allowFindByEmail     Boolean   @default(true)
+  sendReadReceipts     Boolean   @default(true)
+  
+  // Estado de cuenta
   suspendedUntil       DateTime?
+  lastSeen             DateTime  @default(now())
+  registeredAt         DateTime  @default(now())
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
-  // Relations
-  creator    Creator?
-  creatorId  String?  @unique
+  // Información personal (para verificación)
+  fullName             String?
+  dateOfBirth          DateTime?
+  address              String?
+  city                 String?
+  postalCode           String?
+  country              String?
+  
+  // Código de referido
+  referralCode         String    @unique @default(cuid())
+  referredByUserId     String?
+  referredBy           User?     @relation("UserReferrals", fields: [referredByUserId], references: [id])
+  referrals            User[]    @relation("UserReferrals")
 
-  posts      Post[]   @relation("AuthorPosts")
-  likes      Like[]
-  comments   Comment[]
-
-  // Social: following creators via Follow table
-  following  Follow[] @relation("UserFollowing")
+  // Relaciones
+  creator              Creator?
+  posts                Post[]    @relation("UserPosts")
+  likes                Like[]
+  comments             Comment[]
+  
+  // Suscripciones y follows
+  subscriptions        Subscription[]
+  follows              Follow[]  @relation("UserFollows")
+  
+  // Mensajería
+  sentMessages         Message[] @relation("MessageSender")
+  receivedMessages     Message[] @relation("MessageReceiver")
+  conversations        ConversationParticipant[]
+  
+  // Interacciones
+  bookmarks            Bookmark[]
+  ppvPurchases         PPVPurchase[]
+  transactions         Transaction[] @relation("UserTransactions")
+  creatorTransactions  Transaction[] @relation("CreatorTransactions")
+  
+  // Notificaciones y reportes
+  notifications        Notification[]
+  reports              Report[]  @relation("ReportCreator")
+  reportedContent      Report[]  @relation("ReportTarget")
+  
+  // Logros y gamificación
+  achievements         UserAchievement[]
+  
+  // Configuración de notificaciones
+  notifyNewPosts       Boolean   @default(true)
+  notifyNewComments    Boolean   @default(true)
+  notifySpecialOffers  Boolean   @default(true)
+  
+  // Lista de usuarios bloqueados/muteados
+  blockedUsers         BlockedUser[] @relation("BlockerUser")
+  blockedBy            BlockedUser[] @relation("BlockedUser")
+  mutedConversations   String[]      @default([])
+  
+  // Historial de visualizaciones
+  viewedStories        String[]      @default([])
+  
+  // Admin y soporte
+  supportTickets       SupportTicket[]
+  verificationSubmissions VerificationSubmission[]
 }
 
 model Creator {
-  id            String   @id @default(cuid())
-  displayName   String
-  bio           String?
-  location      String?
-  avatarUrl     String?
-  coverUrl      String?
-  monthlyPrice  Float    @default(0)
-  mainCategory  String?
-  isVerified    Boolean  @default(false)
-  followerCount Int      @default(0)
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
-
-  posts  Post[] @relation("CreatorPosts")
+  id                   String              @id @default(cuid())
+  displayName          String
+  bio                  String?
+  location             String?
+  avatarUrl            String?
+  bannerUrl            String?
   
-  // Back-reference for followers
-  followers Follow[] @relation("CreatorFollowers")
+  // Monetización
+  monthlyPrice         Float               @default(0)
+  isVerified           Boolean             @default(false)
+  
+  // Estadísticas
+  followerCount        Int                 @default(0)
+  subscriberCount      Int                 @default(0)
+  totalEarnings        Float               @default(0)
+  
+  // Categorización
+  mainCategory         String?
+  subCategories        String[]            @default([])
+  
+  // Ranking del creador
+  rank                 CreatorRank         @default(BRONZE)
+  creatorScore         Float               @default(0)
+  globalPercentile     Float?
+  
+  // Configuración de pago
+  payoutIban           String?
+  payoutSwiftBic       String?
+  payoutBankName       String?
+  
+  // Enlaces sociales (JSON)
+  socialLinksJson      Json                @default("[]")
+  
+  // Configuración de suscripción
+  subscriptionPackagesJson Json            @default("[]")
+  
+  // Relaciones
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String              @unique
+  
+  posts                Post[]
+  subscribers          Subscription[]
+  followers            Follow[]
+  stories              Story[]
+  fanLists             FanList[]
+  
+  // Monetización
+  receivedTransactions Transaction[]       @relation("CreatorTransactions")
+  
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
 }
 
+// =============================
+// CONTENIDO Y POSTS
+// =============================
+
 model Post {
-  id            String    @id @default(cuid())
-  text          String?
-  type          PostType  @default(PUBLIC)
-  isNsfw        Boolean   @default(false)
-  mediaJson     Json      @default("[]")
-  likeCount     Int       @default(0)
-  commentCount  Int       @default(0)
-  tipCount      Int       @default(0)
-  scheduledAt   DateTime?
-  timestamp     DateTime  @default(now())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  // Relations
-  creator   Creator @relation("CreatorPosts", fields: [creatorId], references: [id], onDelete: Cascade)
-  creatorId String
-
-  author   User   @relation("AuthorPosts", fields: [authorId], references: [id])
-  authorId String
-
-  likedBy  Like[]
-  comments Comment[]
+  id                   String              @id @default(cuid())
+  text                 String?
+  type                 PostType            @default(PUBLIC)
+  format               PostFormat          @default(TEXT)
+  isNsfw               Boolean             @default(false)
+  
+  // Media (JSON array de objetos {type: "image"|"video", url: string})
+  mediaJson            Json                @default("[]")
+  
+  // PPV y monetización
+  ppvPrice             Float?
+  goalAmount           Float?
+  goalRaised           Float               @default(0)
+  
+  // Estadísticas
+  likeCount            Int                 @default(0)
+  commentCount         Int                 @default(0)
+  tipCount             Int                 @default(0)
+  viewCount            Int                 @default(0)
+  
+  // Programación
+  scheduledAt          DateTime?
+  publishedAt          DateTime?
+  
+  // Configuración de visibilidad
+  visibleToListsJson   Json                @default("[]")
+  
+  // Relaciones
+  creator              Creator             @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId            String
+  
+  author               User                @relation("UserPosts", fields: [authorId], references: [id])
+  authorId             String
+  
+  likes                Like[]
+  comments             Comment[]
+  bookmarks            Bookmark[]
+  ppvPurchases         PPVPurchase[]
+  reports              Report[]            @relation("PostReports")
+  
+  // Admin y moderación
+  autoModFlags         AutoModFlag[]
+  
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
 }
 
 model Like {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    String
-  createdAt DateTime @default(now())
+  id                   String              @id @default(cuid())
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  post                 Post                @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId               String
+  createdAt            DateTime            @default(now())
 
   @@unique([userId, postId])
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    String
-  text      String
-  createdAt DateTime @default(now())
+  id                   String              @id @default(cuid())
+  text                 String
+  
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  post                 Post                @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId               String
+  
+  createdAt            DateTime            @default(now())
 }
+
+model Bookmark {
+  id                   String              @id @default(cuid())
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  post                 Post                @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId               String
+  createdAt            DateTime            @default(now())
+
+  @@unique([userId, postId])
+}
+
+// =============================
+// MONETIZACIÓN Y TRANSACCIONES
+// =============================
+
+model Subscription {
+  id                   String              @id @default(cuid())
+  
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  creator              Creator             @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId            String
+  
+  monthlyPrice         Float
+  subscribedAt         DateTime            @default(now())
+  expiresAt            DateTime
+  
+  // Para paquetes de descuento
+  packageMonths        Int                 @default(1)
+  originalPrice        Float?
+  
+  isActive             Boolean             @default(true)
+  
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+
+  @@unique([userId, creatorId])
+}
+
+model Transaction {
+  id                   String              @id @default(cuid())
+  type                 TransactionType
+  amount               Float
+  platformFee          Float
+  creatorPayout        Float
+  description          String
+  
+  // Participantes
+  user                 User                @relation("UserTransactions", fields: [userId], references: [id])
+  userId               String
+  creator              User                @relation("CreatorTransactions", fields: [creatorId], references: [id])
+  creatorId            String
+  
+  // Referencias opcionales
+  postId               String?
+  messageId            String?
+  subscriptionId       String?
+  
+  createdAt            DateTime            @default(now())
+}
+
+model PPVPurchase {
+  id                   String              @id @default(cuid())
+  
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  post                 Post                @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId               String
+  
+  amount               Float
+  purchasedAt          DateTime            @default(now())
+
+  @@unique([userId, postId])
+}
+
+// =============================
+// SOCIAL Y FOLLOWS
+// =============================
 
 model Follow {
-  id           String   @id @default(cuid())
-  follower     User     @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
-  followerId   String
-  following    Creator  @relation("CreatorFollowers", fields: [followingId], references: [id], onDelete: Cascade)
-  followingId  String
-  createdAt    DateTime @default(now())
+  id                   String              @id @default(cuid())
+  
+  follower             User                @relation("UserFollows", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId           String
+  creator              Creator             @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId            String
+  
+  createdAt            DateTime            @default(now())
 
-  @@unique([followerId, followingId])
+  @@unique([followerId, creatorId])
 }
+
+model BlockedUser {
+  id                   String              @id @default(cuid())
+  
+  blocker              User                @relation("BlockerUser", fields: [blockerId], references: [id], onDelete: Cascade)
+  blockerId            String
+  blocked              User                @relation("BlockedUser", fields: [blockedId], references: [id], onDelete: Cascade)
+  blockedId            String
+  
+  createdAt            DateTime            @default(now())
+
+  @@unique([blockerId, blockedId])
+}
+
+// =============================
+// MENSAJERÍA
+// =============================
+
+model Conversation {
+  id                   String              @id @default(cuid())
+  
+  participants         ConversationParticipant[]
+  messages             Message[]
+  
+  lastMessageAt        DateTime            @default(now())
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+}
+
+model ConversationParticipant {
+  id                   String              @id @default(cuid())
+  
+  conversation         Conversation        @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversationId       String
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  
+  joinedAt             DateTime            @default(now())
+  
+  @@unique([conversationId, userId])
+}
+
+model Message {
+  id                   String              @id @default(cuid())
+  content              String?
+  
+  // Media (JSON array)
+  mediaJson            Json                @default("[]")
+  
+  // PPV y tips
+  tipAmount            Float?
+  ppvPrice             Float?
+  
+  sender               User                @relation("MessageSender", fields: [senderId], references: [id])
+  senderId             String
+  receiver             User                @relation("MessageReceiver", fields: [receiverId], references: [id])
+  receiverId           String
+  
+  conversation         Conversation        @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversationId       String
+  
+  isRead               Boolean             @default(false)
+  
+  createdAt            DateTime            @default(now())
+}
+
+// =============================
+// STORIES
+// =============================
+
+model Story {
+  id                   String              @id @default(cuid())
+  
+  creator              Creator             @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId            String
+  
+  items                StoryItem[]
+  
+  createdAt            DateTime            @default(now())
+  expiresAt            DateTime            // Stories expiran en 24h
+}
+
+model StoryItem {
+  id                   String              @id @default(cuid())
+  
+  story                Story               @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  storyId              String
+  
+  mediaType            String              // "image" | "video"
+  mediaUrl             String
+  isNsfw               Boolean             @default(false)
+  
+  order                Int                 @default(0)
+  
+  createdAt            DateTime            @default(now())
+}
+
+// =============================
+// FAN LISTS Y ORGANIZACIÓN
+// =============================
+
+model FanList {
+  id                   String              @id @default(cuid())
+  name                 String
+  
+  creator              Creator             @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId            String
+  
+  // IDs de fans en la lista (JSON array)
+  fanIdsJson           Json                @default("[]")
+  
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+}
+
+// =============================
+// GAMIFICACIÓN Y LOGROS
+// =============================
+
+model Achievement {
+  id                   String              @id @default(cuid())
+  name                 String              @unique
+  description          String
+  icon                 String
+  
+  // Criterios para desbloqueo (JSON)
+  criteriaJson         Json
+  
+  userAchievements     UserAchievement[]
+  
+  createdAt            DateTime            @default(now())
+}
+
+model UserAchievement {
+  id                   String              @id @default(cuid())
+  
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  achievement          Achievement         @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  achievementId        String
+  
+  unlockedAt           DateTime            @default(now())
+
+  @@unique([userId, achievementId])
+}
+
+// =============================
+// NOTIFICACIONES
+// =============================
+
+model Notification {
+  id                   String              @id @default(cuid())
+  type                 NotificationType
+  message              String
+  linkTo               String?
+  
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  
+  // Usuario que realizó la acción (opcional)
+  actorId              String?
+  
+  isRead               Boolean             @default(false)
+  
+  createdAt            DateTime            @default(now())
+}
+
+// =============================
+// ADMIN Y MODERACIÓN
+// =============================
+
+model Report {
+  id                   String              @id @default(cuid())
+  reason               String
+  status               ReportStatus        @default(PENDING)
+  
+  reporter             User                @relation("ReportCreator", fields: [reporterId], references: [id])
+  reporterId           String
+  
+  // Target puede ser usuario o post
+  targetType           String              // "user" | "post"
+  targetUser           User?               @relation("ReportTarget", fields: [targetUserId], references: [id])
+  targetUserId         String?
+  targetPost           Post?               @relation("PostReports", fields: [targetPostId], references: [id])
+  targetPostId         String?
+  
+  createdAt            DateTime            @default(now())
+  resolvedAt           DateTime?
+}
+
+model AutoModFlag {
+  id                   String              @id @default(cuid())
+  reason               String
+  confidence           Float               // 0.0 to 1.0
+  status               AutoModStatus       @default(PENDING)
+  
+  post                 Post                @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId               String
+  
+  createdAt            DateTime            @default(now())
+  reviewedAt           DateTime?
+}
+
+model VerificationSubmission {
+  id                   String              @id @default(cuid())
+  reason               VerificationReason
+  idImageUrl           String
+  selfieImageUrl       String?
+  status               VerificationStatus  @default(PENDING)
+  
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  
+  // Datos de onboarding para nuevos creadores (JSON)
+  onboardingDataJson   Json?
+  
+  createdAt            DateTime            @default(now())
+  reviewedAt           DateTime?
+}
+
+model SupportTicket {
+  id                   String              @id @default(cuid())
+  category             SupportCategory
+  subject              String
+  message              String
+  status               SupportStatus       @default(OPEN)
+  
+  user                 User?               @relation(fields: [userId], references: [id])
+  userId               String?
+  
+  // Para usuarios no registrados
+  guestEmail           String?
+  
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+}
+
+// =============================
+// CONFIGURACIÓN GLOBAL
+// =============================
+
+model PlatformSettings {
+  id                   String              @id @default("singleton")
+  
+  // Comisiones por rango (JSON)
+  commissionRatesJson  Json                @default("{\"BRONZE\": 0.20, \"SILVER\": 0.18, \"GOLD\": 0.15, \"PLATINUM\": 0.12, \"DIAMOND\": 0.10}")
+  
+  // Creadores destacados (JSON array de IDs)
+  featuredCreatorIdsJson Json              @default("[]")
+  
+  // Categorías disponibles (JSON)
+  categoriesJson       Json                @default("[]")
+  
+  updatedAt            DateTime            @updatedAt
+}
+
+model Announcement {
+  id                   String              @id @default(cuid())
+  title                String
+  content              String
+  target               AnnouncementTarget  @default(ALL)
+  isActive             Boolean             @default(true)
+  
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+}
+
+// =============================
+// ENUMS
+// =============================
 
 enum UserRole {
   FAN
@@ -116,5 +593,77 @@ enum UserRole {
 
 enum PostType {
   PUBLIC
-  PREMIUM
+  SUBSCRIBER_ONLY
+  PAY_PER_VIEW
+}
+
+enum PostFormat {
+  TEXT
+  GALLERY
+}
+
+enum CreatorRank {
+  BRONZE
+  SILVER
+  GOLD
+  PLATINUM
+  DIAMOND
+}
+
+enum TransactionType {
+  SUBSCRIPTION
+  TIP
+  PPV
+  REFERRAL_PAYOUT
+}
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  NEW_SUBSCRIBER
+  TIP
+  NEW_POST
+  SPECIAL_OFFER
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  DISMISSED
+}
+
+enum AutoModStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum VerificationReason {
+  CREATOR_ONBOARDING
+  FAN_NSFW
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum SupportCategory {
+  BILLING
+  TECHNICAL
+  ACCOUNT
+  GENERAL
+}
+
+enum SupportStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
+
+enum AnnouncementTarget {
+  ALL
+  CREATOR
+  FAN
 }
